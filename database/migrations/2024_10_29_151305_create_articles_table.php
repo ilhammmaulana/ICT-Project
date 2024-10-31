@@ -12,7 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary()->index();
+            $table->string('title');
+            $table->string('slug')->unique()->index();
+            $table->text('body');
+            $table->string('image')->nullable();
+            $table->string('meta_tag')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('meta_title')->nullable();
+            $table->foreignUuid('article_category_id')->constrained('article_categories')->onDelete('restrict');
+            $table->foreignUuid('created_by')->constrained('users', 'id');
             $table->timestamps();
         });
     }
