@@ -9,9 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory, HasUuids;
-    protected $fillable = ['id', 'name', 'slug', 'meta_title', 'meta_description', 'title', 'description', 'image', 'course_category_id'];
+    protected $fillable = ['id', 'name', 'slug', 'meta_title', 'meta_description', 'title', 'description', 'image', 'course_category_id', 'created_by'];
     public function courseCategory()
     {
         return $this->belongsTo(CourseCategory::class, 'course_category_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

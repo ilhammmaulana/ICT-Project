@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->foreignUuid('course_category_id')->constrained('course_categories')->onDelete('restrict');
+            $table->foreignUuid('created_by')->constrained('users')->onDelete('restrict');
             $table->timestamps();
         });
     }
