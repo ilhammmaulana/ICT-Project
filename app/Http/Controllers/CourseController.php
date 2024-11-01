@@ -70,6 +70,7 @@ class CourseController extends Controller
                 'description' => $validate['description'],
                 'image' => $validate['image'],
                 'course_category_id' => $validate['course_category_id'],
+                'created_by' => auth()->user()->id
             ]);
 
             return redirect()->route('courses.index');
@@ -141,6 +142,7 @@ class CourseController extends Controller
                 'description' => $validate['description'],
                 'image' => $validate['image'],
                 'course_category_id' => $validate['course_category_id'],
+                'created_by' => auth()->user()->id
             ]);
 
             return redirect()->route('courses.index');
