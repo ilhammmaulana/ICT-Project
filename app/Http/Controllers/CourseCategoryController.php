@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Meeting;
+use App\Models\CourseCategory;
 use Illuminate\Http\Request;
 
-class MeetingController extends Controller
+class CourseCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class MeetingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Meeting $meeting)
+    public function show(CourseCategory $courseCategory)
     {
         //
     }
@@ -42,7 +42,7 @@ class MeetingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Meeting $meeting)
+    public function edit(CourseCategory $courseCategory)
     {
         //
     }
@@ -50,7 +50,7 @@ class MeetingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Meeting $meeting)
+    public function update(Request $request, CourseCategory $courseCategory)
     {
         //
     }
@@ -58,7 +58,7 @@ class MeetingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Meeting $meeting)
+    public function destroy(CourseCategory $courseCategory)
     {
         //
     }

@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory(20)->create();
         User::create([
             'id' => Str::uuid(),
             'name' => 'Admin',
