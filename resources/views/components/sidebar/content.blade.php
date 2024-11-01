@@ -6,18 +6,7 @@
         </x-slot>
     </x-sidebar.link>
 
-    {{-- <x-sidebar.dropdown title="Buttons" :active="Str::startsWith(request()->route()->uri(), 'buttons')">
-        <x-slot name="icon">
-            <x-heroicon-o-view-grid class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-        </x-slot>
 
-        <x-sidebar.sublink title="Text button" href="{{ route('buttons.text') }}"
-    :active="request()->routeIs('buttons.text')" />
-    <x-sidebar.sublink title="Icon button" href="{{ route('buttons.icon') }}"
-        :active="request()->routeIs('buttons.icon')" />
-    <x-sidebar.sublink title="Text with icon" href="{{ route('buttons.text-icon') }}"
-        :active="request()->routeIs('buttons.text-icon')" />
-    </x-sidebar.dropdown> --}}
     @role(['admin', 'editor'])
         <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500">
             Manage
@@ -32,14 +21,14 @@
                 <x-icons.dashboard class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </x-slot>
         </x-sidebar.link>
-        <x-sidebar.link title="Article" href="{{ route('courses.index') }}" :isActive="request()->routeIs('courses.index')">
+        <x-sidebar.link title="Article" href="{{ route('articles.index') }}" :isActive="request()->routeIs('articles.index')">
             <x-slot name="icon">
-                <x-icons.dashboard class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+                <x-icons.news class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </x-slot>
         </x-sidebar.link>
-        <x-sidebar.link title="Users" href="{{ route('courses.index') }}" :isActive="request()->routeIs('courses.index')">
+        <x-sidebar.link title="Users" href="{{ route('articles.index') }}" :isActive="request()->routeIs('articles.index')">
             <x-slot name="icon">
-                <x-icons.dashboard class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+                <x-icons.people class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </x-slot>
         </x-sidebar.link>
     @endrole
@@ -48,7 +37,7 @@
     </div>
     <x-sidebar.link title="Courses" href="{{ route('courses.index') }}" :isActive="request()->routeIs('courses.index')">
         <x-slot name="icon">
-            <x-icons.dashboard class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+            <x-icons.inbox-alt class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
         </x-slot>
     </x-sidebar.link>
     <x-sidebar.link title="Your Progress" href="{{ route('courses.index') }}" :isActive="request()->routeIs('courses.index')">
