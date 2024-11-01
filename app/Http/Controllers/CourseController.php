@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
@@ -13,7 +16,7 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::all();
-        return view('pages.admin.courses', [
+        return view('pages.admin.course.index', [
             'courses' => $courses
         ]);
     }
@@ -31,7 +34,48 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validate = $request->validate([
+                'name' => 'required|string',
+                'meta_title' => 'required|string',
+                'meta_description' => 'required|string',
+                'title' => 'required|string',
+                'description' => 'required|string',
+                'image' => 'nullable|image:max:4096:mimes:png,jpg,jpeg',
+                'course_category_id' => 'required|exists:course_categories,id',
+            ]);
+
+            $slug = Str::slug($validate['name']);
+
+            $same_slug_count = Course::where('slug', $slug)->count();
+
+            if ($same_slug_count > 0) {
+                $slug = $slug . '-' . $same_slug_count;
+            }
+
+            if ($request->hasFile('image')) {
+                $image_name = $slug . Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
+                $path = $request->file('image')->store('/courses/' . $image_name, 'public');
+                $imagePath = str_replace('/storage', 'storage', Storage::url($path));
+                $validate['image'] = $imagePath;
+            }
+
+
+            Course::create([
+                'name' => $validate['name'],
+                'slug' => $slug,
+                'meta_title' => $validate['meta_title'],
+                'meta_description' => $validate['meta_description'],
+                'title' => $validate['title'],
+                'description' => $validate['description'],
+                'image' => $validate['image'],
+                'course_category_id' => $validate['course_category_id'],
+            ]);
+
+            return redirect()->route('courses.index');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -39,7 +83,9 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        return view('pages.admin.course.show', [
+            'course' => $course
+        ]);
     }
 
     /**
@@ -55,7 +101,52 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        try {
+            $validate = $request->validate([
+                'name' => 'required|string',
+                'meta_title' => 'required|string',
+                'meta_description' => 'required|string',
+                'title' => 'required|string',
+                'description' => 'required|string',
+                'image' => 'nullable|image:max:4096:mimes:png,jpg,jpeg',
+                'course_category_id' => 'required|exists:course_categories,id',
+            ]);
+
+            $slug = Str::slug($validate['name']);
+
+            $same_slug_count = Course::where('slug', $slug)->count();
+
+            if ($same_slug_count > 0) {
+                $slug = $slug . '-' . $same_slug_count;
+            }
+
+            if ($request->hasFile('image')) {
+                $image_name = $slug . Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
+                $path = $request->file('image')->store('/courses/' . $image_name, 'public');
+                $imagePath = str_replace('/storage', 'storage', Storage::url($path));
+                $validate['image'] = $imagePath;
+
+
+                // delete olg image
+                Storage::delete($course->image);
+            }
+
+
+            $course->update([
+                'name' => $validate['name'],
+                'slug' => $slug,
+                'meta_title' => $validate['meta_title'],
+                'meta_description' => $validate['meta_description'],
+                'title' => $validate['title'],
+                'description' => $validate['description'],
+                'image' => $validate['image'],
+                'course_category_id' => $validate['course_category_id'],
+            ]);
+
+            return redirect()->route('courses.index');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -63,6 +154,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+        return redirect()->route('courses.index');
     }
 }

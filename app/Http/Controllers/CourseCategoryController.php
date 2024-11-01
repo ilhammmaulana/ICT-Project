@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CourseCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CourseCategoryController extends Controller
 {
@@ -12,7 +13,8 @@ class CourseCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $course_categories = CourseCategory::all();
+        return view('pages.admin.course-category.index', compact('course_categories'));
     }
 
     /**
@@ -20,7 +22,7 @@ class CourseCategoryController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -28,7 +30,18 @@ class CourseCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validate = $request->validate([
+                'name' => 'required|string',
+            ]);
+
+            CourseCategory::create([
+                'name' => $validate['name'],
+            ]);
+            return redirect()->route('course-categories.index');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -36,7 +49,11 @@ class CourseCategoryController extends Controller
      */
     public function show(CourseCategory $courseCategory)
     {
-        //
+        $course_category = CourseCategory::findOrFail($courseCategory->id);
+
+        return view('pages.admin.course-category.show', [
+            'course_category' => $course_category
+        ]);
     }
 
     /**
@@ -52,7 +69,19 @@ class CourseCategoryController extends Controller
      */
     public function update(Request $request, CourseCategory $courseCategory)
     {
-        //
+        try {
+            $validate = $request->validate([
+                'name' => 'required|string',
+            ]);
+
+            $courseCategory->update([
+                'name' => $validate['name'],
+            ]);
+
+            return redirect()->route('course-categories.index');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -60,6 +89,7 @@ class CourseCategoryController extends Controller
      */
     public function destroy(CourseCategory $courseCategory)
     {
-        //
+        $courseCategory->delete();
+        return redirect()->route('course-categories.index');
     }
 }
