@@ -21,12 +21,12 @@
                 <x-icons.dashboard class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </x-slot>
         </x-sidebar.link>
-        <x-sidebar.link title="Article" href="{{ route('articles.index') }}" :isActive="request()->routeIs('articles.index')">
+        <x-sidebar.link title="Article" href="{{ route('admin.articles.index') }}" :isActive="request()->routeIs('admin.articles.index')">
             <x-slot name="icon">
                 <x-icons.news class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </x-slot>
         </x-sidebar.link>
-        <x-sidebar.link title="Users" href="{{ route('articles.index') }}" :isActive="request()->routeIs('articles.index')">
+        <x-sidebar.link title="Users" href="{{ route('admin.articles.index') }}" :isActive="request()->routeIs('admin.articles.index')">
             <x-slot name="icon">
                 <x-icons.people class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </x-slot>
