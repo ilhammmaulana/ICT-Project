@@ -28,7 +28,18 @@ class ModuleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validate = $request->validate([
+                'title' => 'required|string',
+                'course_id' => 'required|exists:courses,id',
+                'description' => 'nullable|string',
+            ]);
+
+            Module::create($validate);
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -36,7 +47,6 @@ class ModuleController extends Controller
      */
     public function show(Module $module)
     {
-        //
     }
 
     /**
@@ -52,7 +62,18 @@ class ModuleController extends Controller
      */
     public function update(Request $request, Module $module)
     {
-        //
+        try {
+            $validate = $request->validate([
+                'title' => 'required|string',
+                'course_id' => 'required|exists:courses,id',
+                'description' => 'nullable|string',
+            ]);
+
+            $module->update($validate);
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -60,6 +81,6 @@ class ModuleController extends Controller
      */
     public function destroy(Module $module)
     {
-        //
+        $module->delete();
     }
 }

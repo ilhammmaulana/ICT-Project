@@ -20,7 +20,7 @@ class ModuleContentController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -28,7 +28,21 @@ class ModuleContentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validate = $request->validate([
+                'title' => 'required|string',
+                'course_id' => 'required|exists:courses,id',
+                'description' => 'nullable|string',
+                'module_id' => 'required|exists:modules,id',
+                'content' => 'required|string',
+                'content_type' => 'required|string',
+            ]);
+
+           
+            // return redirect()->route('course-categories.index');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**

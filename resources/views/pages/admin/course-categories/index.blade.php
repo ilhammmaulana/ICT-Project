@@ -48,7 +48,7 @@
 
                         </td>
                         <td class="px-6 py-4">
-                            <x-button href="{{ route('course-categories.edit', $course_category) }}">
+                            <x-button href="{{ route('admin.course-categories.edit', $course_category) }}">
                                 Edit
                             </x-button>
                         </td>

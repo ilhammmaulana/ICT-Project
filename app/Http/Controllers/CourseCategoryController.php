@@ -14,7 +14,7 @@ class CourseCategoryController extends Controller
     public function index()
     {
         $course_categories = CourseCategory::all();
-        return view('pages.admin.course-category.index', compact('course_categories'));
+        return view('pages.admin.course-categories.index', compact('course_categories'));
     }
 
     /**
@@ -38,7 +38,7 @@ class CourseCategoryController extends Controller
             CourseCategory::create([
                 'name' => $validate['name'],
             ]);
-            return redirect()->route('course-categories.index');
+            return redirect()->route('admin.course-categories.index');
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -51,7 +51,7 @@ class CourseCategoryController extends Controller
     {
         $course_category = CourseCategory::findOrFail($courseCategory->id);
 
-        return view('pages.admin.course-category.show', [
+        return view('pages.admin.course-categories.show', [
             'course_category' => $course_category
         ]);
     }
@@ -78,7 +78,7 @@ class CourseCategoryController extends Controller
                 'name' => $validate['name'],
             ]);
 
-            return redirect()->route('course-categories.index');
+            return redirect()->route('admin.course-categories.index');
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -90,6 +90,6 @@ class CourseCategoryController extends Controller
     public function destroy(CourseCategory $courseCategory)
     {
         $courseCategory->delete();
-        return redirect()->route('course-categories.index');
+        return redirect()->route('admin.course-categories.index');
     }
 }
