@@ -8,7 +8,7 @@
 
 
     @role(['admin', 'editor'])
-        <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500">
+        <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500 dark:text-white">
             Manage
         </div>
         <x-sidebar.link title="Course Categories" href="{{ route('course-categories.index') }}" :isActive="request()->routeIs('course-categories.index')">
@@ -36,7 +36,7 @@
             </x-slot>
         </x-sidebar.link> --}}
     @endrole
-    <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500">
+    <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray dark:text-500">
         Applications
     </div>
     <x-sidebar.link title="Courses" href="{{ route('courses.index') }}" :isActive="request()->routeIs('courses.index')">
