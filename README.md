@@ -72,7 +72,7 @@ Follow these steps to set up and run the project locally:
    npm run build (for production)
    ```
 
-8. ### Serve the Application in another terminal
+8. ### Serve the Application 
 
    Start the Laravel development server:
 
