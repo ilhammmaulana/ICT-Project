@@ -68,7 +68,7 @@ Follow these steps to set up and run the project locally:
 
    ```bash
    npm install
-   npm run build
+   npm run dev
    ```
 
 8. ### Serve the Application
