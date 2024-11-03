@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CourseCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -16,8 +18,8 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::all();
-        return view('pages.admin.course.index', [
-            'courses' => $courses
+        return view('pages.admin.courses.index', [
+            'courses' => $courses,
         ]);
     }
 
@@ -26,7 +28,11 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        $course_categories = CourseCategory::all();
+
+        return view('pages.admin.courses.create', [
+            'course_categories' => $course_categories
+        ]);
     }
 
     /**
@@ -35,10 +41,12 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         try {
+            Log::info($request->all());
+            
             $validate = $request->validate([
                 'name' => 'required|string',
-                'meta_title' => 'required|string',
-                'meta_description' => 'required|string',
+                'meta_title' => 'nullable|string',
+                'meta_description' => 'nullable|string',
                 'title' => 'required|string',
                 'description' => 'required|string',
                 'image' => 'nullable|image:max:4096:mimes:png,jpg,jpeg',
@@ -53,13 +61,22 @@ class CourseController extends Controller
                 $slug = $slug . '-' . $same_slug_count;
             }
 
-            if ($request->hasFile('image')) {
+
+            if (isset($validate['image']) && $request->hasFile('image')) {
                 $image_name = $slug . Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
                 $path = $request->file('image')->store('/courses/' . $image_name, 'public');
                 $imagePath = str_replace('/storage', 'storage', Storage::url($path));
                 $validate['image'] = $imagePath;
             }
 
+
+            if (!isset($validate['meta_title'])) {
+                $validate['meta_title'] = $validate['title'];
+            }
+
+            if (!isset($validate['meta_description'])) {
+                $validate['meta_description'] = $validate['description'];
+            }
 
             Course::create([
                 'name' => $validate['name'],
@@ -68,14 +85,14 @@ class CourseController extends Controller
                 'meta_description' => $validate['meta_description'],
                 'title' => $validate['title'],
                 'description' => $validate['description'],
-                'image' => $validate['image'],
+                'image' => isset($validate['image']) ? $validate['image'] : null,
                 'course_category_id' => $validate['course_category_id'],
                 'created_by' => auth()->user()->id
             ]);
 
-            return redirect()->route('courses.index');
+            return redirect()->route('admin.courses.index');
         } catch (\Throwable $th) {
-            //throw $th;
+            Log::info($th);
         }
     }
 
@@ -84,7 +101,7 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return view('pages.admin.course.show', [
+        return view('pages.admin.courses.show', [
             'course' => $course
         ]);
     }
@@ -145,7 +162,7 @@ class CourseController extends Controller
                 'created_by' => auth()->user()->id
             ]);
 
-            return redirect()->route('courses.index');
+            return redirect()->route('admin.courses.index');
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -157,6 +174,6 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         $course->delete();
-        return redirect()->route('courses.index');
+        return redirect()->route('admin.courses.index');
     }
 }

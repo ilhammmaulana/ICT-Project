@@ -16,13 +16,4 @@ Route::prefix('dashboard')->group(function () {
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
-    Route::prefix('courses')->group(function () {
-        Route::get('/', [CourseController::class, 'index'])->name('courses.index');
-    });
-
-    Route::prefix('course-categories')->group(function () {
-        Route::get('/', [CourseCategoryController::class, 'index'])->name('course-categories.index');
-        Route::get('/{course_category}', [CourseCategoryController::class, 'show'])->name('course-categories.edit');
-        Route::delete('/{course_category}', [CourseCategoryController::class, 'show'])->name('course-categories.edit');
-    });
 })->middleware('auth');
