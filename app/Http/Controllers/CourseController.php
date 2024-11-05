@@ -15,9 +15,10 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::all();
+        $search = $request->input('search', '');
+        $courses = Course::with('courseCategory')->where('name', 'like', '%' . $search . '%')->get();
         return view('pages.admin.courses.index', [
             'courses' => $courses,
         ]);
@@ -42,7 +43,7 @@ class CourseController extends Controller
     {
         try {
             Log::info($request->all());
-            
+
             $validate = $request->validate([
                 'name' => 'required|string',
                 'meta_title' => 'nullable|string',
@@ -111,7 +112,10 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        return view('pages.admin.courses.edit', [
+            'course' => $course,
+            'course_categories' => CourseCategory::all()
+        ]);
     }
 
     /**
@@ -171,9 +175,9 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course)
+    public function destroy($id)
     {
-        $course->delete();
+        Course::where('id', $id)->delete();
         return redirect()->route('admin.courses.index');
     }
 }

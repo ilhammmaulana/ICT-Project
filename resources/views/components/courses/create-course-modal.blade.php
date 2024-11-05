@@ -37,12 +37,12 @@
                         <option value="{{ $course_category->id }}">{{ $course_category->name }}</option>
                     @endforeach
                 </select> --}}
-                <select class="select select-bordered w-full mt-2" name="category_id">
+                {{-- <select class="select select-bordered w-full mt-2" name="category_id">
                     <option disabled selected>Select course category</option>
                     @foreach ($courseCategories as $courseCategory)
                         <option value="{{ $courseCategory->id }}">{{ $courseCategory->name }}</option>
                     @endforeach
-                </select>
+                </select> --}}
 
             </div>
 
