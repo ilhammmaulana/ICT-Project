@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ModuleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,8 +22,16 @@ Route::prefix('admin')->group(function () {
         Route::get('/create', [CourseController::class, 'create'])->name('admin.courses.create');
         Route::post('/', [CourseController::class, 'store'])->name('admin.courses.store');
         Route::get('/edit/{course}', [CourseController::class, 'edit'])->name('admin.courses.edit');
-        Route::put('/{course}', [CourseController::class, 'update'])->name('admin.courses.update');
+        Route::put('/{id}', [CourseController::class, 'update'])->name('admin.courses.update');
         Route::delete('/{id}', [CourseController::class, 'destroy'])->name('admin.courses.destroy');
+    });
+
+    Route::prefix('course-modules')->group(function () {
+        Route::get('/', [ModuleController::class, 'index'])->name('admin.course-modules.index');
+        Route::post('/', [ModuleController::class, 'store'])->name('admin.course-modules.store');
+        Route::get('/edit/{id}', [ModuleController::class, 'edit'])->name('admin.course-modules.edit');
+        Route::put('/{course}', [ModuleController::class, 'update'])->name('admin.course-modules.update');
+        Route::delete('/{id}', [ModuleController::class, 'destroy'])->name('admin.course-modules.destroy');
     });
 
     Route::prefix('course-categories')->group(function () {
