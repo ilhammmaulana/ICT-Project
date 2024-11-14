@@ -20,9 +20,8 @@
         <div class="space-y-2">
             <x-form.label for="name" :value="__('Name')" />
 
-            <x-form.input id="name" name="name" type="text" class="block w-full" :value="old('name', $user->name)"
-                required autofocus autocomplete="name" />
-
+            <x-form.input id="name" name="name" type="text" :value="old('name', $user->name)" required autofocus
+                autocomplete="name" />
             <x-form.error :messages="$errors->get('name')" />
         </div>
 

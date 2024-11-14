@@ -1,68 +1,87 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'K UI') }}</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
+        <title>{{ config('app.name', 'K UI') }}</title>
 
-    <!-- Styles -->
-    <style>
-        [x-cloak] {
-            display: none;
-        }
-    </style>
+        <!-- Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet" />
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+        <!-- Styles -->
+        <style>
+            [x-cloak] {
+                display: none;
+            }
+        </style>
 
-<body class="font-sans antialiased">
-    <div
-        x-data="mainState"
-        :class="{ dark: isDarkMode }"
-        x-on:resize.window="handleWindowResize"
-        x-cloak
-    >
-        <div class="min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200">
-            <!-- Sidebar -->
-            <x-sidebar.sidebar />
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
 
-            <!-- Page Wrapper -->
-            <div
-                class="flex flex-col min-h-screen"
-                :class="{
+    <body class="font-sans antialiased">
+        <div x-data="mainState" :class="{ dark: isDarkMode }" x-on:resize.window="handleWindowResize" x-cloak>
+            <div class="min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200">
+                <!-- Sidebar -->
+                <x-sidebar.sidebar />
+
+                <!-- Page Wrapper -->
+                <div class="flex flex-col min-h-screen" :class="{
                     'lg:ml-64': isSidebarOpen,
                     'md:ml-16': !isSidebarOpen
-                }"
-                style="transition-property: margin; transition-duration: 150ms;"
-            >
+                }" style="transition-property: margin; transition-duration: 150ms;">
 
-                <!-- Navbar -->
-                <x-navbar />
+                    <!-- Navbar -->
+                    <x-navbar />
 
-                <!-- Page Heading -->
-                <header>
-                    <div class="p-4 sm:p-6">
-                        {{ $header }}
-                    </div>
-                </header>
+                    <!-- Page Heading -->
+                    <header>
+                        <div class="p-4 sm:p-6">
+                            {{ $header }}
+                        </div>
+                    </header>
 
-                <!-- Page Content -->
-                <main class="px-4 sm:px-6 flex-1">
-                    {{ $slot }}
-                </main>
+                    <!-- Page Content -->
+                    <main class="px-4 sm:px-6 flex-1">
+                        {{ $slot }}
+                    </main>
 
-                <!-- Page Footer -->
-                <x-footer />
+                    <!-- Page Footer -->
+                    <x-footer />
+                </div>
             </div>
         </div>
-    </div>
-</body>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        @if(session('success'))
+        <script>
+            const currentTheme = document.documentElement.getAttribute('data-theme'); // Get the current theme
+            console.log(currentTheme);
+       const Toast = Swal.mixin({
+          toast: true,
+          background: currentTheme === 'dark' ? 'black' : 'white', // Set background based on theme
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+             toast.onmouseenter = Swal.stopTimer;
+             toast.onmouseleave = Swal.resumeTimer;
+          }
+       });
+    
+       Toast.fire({
+          icon: "success",
+          title: "{{ session('success') }}"
+       });
+        </script>
+        @endif
+    </body>
+
 </html>
