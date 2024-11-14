@@ -15,9 +15,10 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::all();
+        $search = $request->input('search', '');
+        $courses = Course::with('courseCategory')->where('name', 'like', '%' . $search . '%')->get();
         return view('pages.admin.courses.index', [
             'courses' => $courses,
         ]);
@@ -41,8 +42,6 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         try {
-            Log::info($request->all());
-            
             $validate = $request->validate([
                 'name' => 'required|string',
                 'meta_title' => 'nullable|string',
@@ -109,9 +108,17 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course)
+    public function edit(Request $request, Course $course)
     {
-        //
+        $searchModule = $request->input('searchModule', '');
+        $course = Course::with(['modules' => function ($query) use ($searchModule) {
+            $query->where('title', 'like', '%' . $searchModule . '%');
+        }])->where('id', $course->id)->first();
+
+        return view('pages.admin.courses.edit', [
+            'course' => $course,
+            'course_categories' => CourseCategory::all(),
+        ]);
     }
 
     /**
@@ -129,7 +136,7 @@ class CourseController extends Controller
                 'image' => 'nullable|image:max:4096:mimes:png,jpg,jpeg',
                 'course_category_id' => 'required|exists:course_categories,id',
             ]);
-
+            
             $slug = Str::slug($validate['name']);
 
             $same_slug_count = Course::where('slug', $slug)->count();
@@ -171,9 +178,9 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course)
+    public function destroy($id)
     {
-        $course->delete();
+        Course::where('id', $id)->delete();
         return redirect()->route('admin.courses.index');
     }
 }

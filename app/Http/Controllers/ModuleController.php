@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Module;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ModuleController extends Controller
 {
@@ -29,15 +30,24 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         try {
+            Log::info($request->all());
             $validate = $request->validate([
                 'title' => 'required|string',
                 'course_id' => 'required|exists:courses,id',
                 'description' => 'nullable|string',
             ]);
 
-            Module::create($validate);
+            Module::create([
+
+                'course_id' => $validate['course_id'],
+                'title' => $validate['title'],
+                'description' => $validate['description'],
+            ]);
+
+            return redirect()->route('admin.courses.edit', ['course' => $validate['course_id']]);
             
         } catch (\Throwable $th) {
+            Log::error($th);
             //throw $th;
         }
     }
@@ -52,9 +62,10 @@ class ModuleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Module $module)
+    public function edit($id)
     {
-        //
+        $module = Module::find($id)->first();
+        return redirect()->route('admin.courses.edit', ['course' => $module->course_id]);
     }
 
     /**
