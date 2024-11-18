@@ -37,23 +37,24 @@
             </thead>
             <tbody>
                 @foreach ($articles as $article)
-                <tr class="bg-white border-b dark:bg-gray-800">
-                    <th>{{ $loop->iteration }}</th>
-                    <td>{{ $article->title }}</td>
-                    <td>{{ $article->created_at ?? '-' }}</td>
-                    <td>{{ $article->updated_at ?? '-' }}</td>
-                    <td>
-                        <x-button href="{{ route('admin.articles.edit', $article) }}">
-                            Edit
-                        </x-button>
-                    </td>
-                </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800">
+                        <th>{{ $loop->iteration }}</th>
+                        <td>{{ $article->title }}</td>
+                        <td>{{ $article->created_at ?? '-' }}</td>
+                        <td>{{ $article->updated_at ?? '-' }}</td>
+                        <td>
+                            <x-button href="{{ route('admin.articles.edit', $article) }}">
+                                Edit
+                            </x-button>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
         <div class="flex justify-center">
             <div class="join mt-5">
-                <input class="join-item btn btn-square" type="radio" name="options" aria-label="1" checked="checked" />
+                <input class="join-item btn btn-square" type="radio" name="options" aria-label="1"
+                    checked="checked" />
                 <input class="join-item btn btn-square" type="radio" name="options" aria-label="2" />
                 <input class="join-item btn btn-square" type="radio" name="options" aria-label="3" />
                 <input class="join-item btn btn-square" type="radio" name="options" aria-label="4" />

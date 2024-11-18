@@ -39,4 +39,4 @@ Route::prefix('admin')->group(function () {
         Route::get('/{course_category}', [CourseCategoryController::class, 'show'])->name('admin.course-categories.edit');
         Route::delete('/{course_category}', [CourseCategoryController::class, 'show'])->name('admin.course-categories.edit');
     });
-});
+})->middleware(['auth']);
