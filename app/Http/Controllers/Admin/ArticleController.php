@@ -36,14 +36,16 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'category_id' => 'required|exists:article_categories,id',
-            // Add more validation rules as needed
-        ]);
-        if ($validation->fails()) {
-        }
+        dd($request->all());
+        // $validation = $request->validate([
+        //     'title' => 'required|string|max:255',
+        //     'content' => 'required|string',
+        //     'category_id' => 'required|exists:article_categories,id',
+        //     'description' => 'required|string',
+        //     'image' => 'image|mimes:jpg,jpeg,png'
+        // ]);
+        // if ($validation->fails()) {
+        // }
     }
 
     /**
