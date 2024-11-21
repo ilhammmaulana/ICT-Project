@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="head">
+        @trixassets
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
-        <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
     </x-slot>
 
     <x-slot name="header">
@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <x-form.label class="mb-2" for="title" :value="__('Title')" />
                     <x-form.input id="title" name="title" type="text" x-model="title" x-on:input="generateSlug"
-                        required autofocus autocomplete="title" placeholder="Masukkan Judul" />
+                        required autofocus autocomplete="title" placeholder="Masukkan Judul" :value="old('title')" />
                     <x-form.error :messages="$errors->get('title')" />
                 </div>
                 <div class="form-group">
@@ -44,33 +44,39 @@
                 <div class="form-control">
                     <label class="label cursor-pointer">
                         <span class="label-text">Advanced Settings</span>
-                        <input type="checkbox" x-model="showMeta" class="checkbox checkbox-primary" />
+                        <!-- Hidden input for unchecked state -->
+                        <input type="hidden" name="advance_settings" value="false">
+                        <!-- Checkbox input for checked state -->
+                        <input type="checkbox" name="advance_settings" x-model="showMeta"
+                            class="checkbox checkbox-primary" />
                     </label>
                 </div>
             </div>
+
             <!-- Advanced Meta Settings -->
             <div x-show="showMeta" class="grid grid-cols-2 gap-4">
                 <div class="form-group">
                     <x-form.label class="mb-2" for="meta_title" :value="__('Meta Title')" />
-                    <x-form.input id="meta_title" name="meta_title" type="text" placeholder="Masukkan Meta Title" />
+                    <x-form.input id="meta_title" name="meta_title" type="text" placeholder="Masukkan Meta Title"
+                        :value="old('meta_title')" />
                     <x-form.error :messages="$errors->get('meta_title')" />
                 </div>
                 <div class="form-group">
                     <x-form.label class="mb-2" for="meta_author" :value="__('Meta Author')" />
-                    <x-form.input id="meta_author" name="meta_author" type="text"
-                        placeholder="Masukkan Meta Author" />
+                    <x-form.input id="meta_author" name="meta_author" type="text" placeholder="Masukkan Meta Author"
+                        :value="old('meta_author')" />
                     <x-form.error :messages="$errors->get('meta_author')" />
                 </div>
                 <div class="form-group">
                     <x-form.label class="mb-2" for="meta_keyword" :value="__('Meta Keyword')" />
                     <x-form.input id="meta_keyword" name="meta_keyword" type="text"
-                        placeholder="Masukkan Meta Keyword. Example: HTML, CSS, JS" />
+                        placeholder="Masukkan Meta Keyword. Example: HTML, CSS, JS" :value="old('meta_keyword')" />
                     <x-form.error :messages="$errors->get('meta_keyword')" />
                 </div>
                 <div class="form-group col-span-2">
                     <x-form.label class="mb-2" for="meta_description" :value="__('Meta Description')" />
                     <textarea id="meta_description" name="meta_description" class="textarea textarea-bordered w-full"
-                        placeholder="Masukkan Meta Description..."></textarea>
+                        placeholder="Masukkan Meta Description...">{{ old('meta_description') }}</textarea>
                     <x-form.error :messages="$errors->get('meta_description')" />
                 </div>
             </div>
@@ -78,9 +84,8 @@
             <!-- Content (Trix Editor) -->
             <div class="form-group">
                 <x-form.label class="mb-2" for="content" :value="__('Content')" />
-                <input id="content" type="hidden" name="content">
-                <trix-editor input="content"
-                    class="editor-content border rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600"></trix-editor>
+                <input id="content" type="hidden" name="content" :value="old('content')" />
+                @trix(\App\Models\Article::class, 'content')
                 <x-form.error :messages="$errors->get('content')" />
             </div>
 
@@ -94,18 +99,24 @@
     <x-slot name="script">
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                document.addEventListener('trix-change', function() {
-                    const content = document.querySelector('trix-editor').editor.getDocument().toString();
+                const trixEditor = document.querySelector('trix-editor');
+                trixEditor.addEventListener('trix-change', function() {
+                    const content = trixEditor.editor.getDocument().toString();
                     document.getElementById('content').value = content;
+                });
+
+                document.querySelector('form').addEventListener('submit', function(event) {
+                    const content = document.getElementById('content').value;
+                    console.log(content); // Periksa apakah HTML yang benar ada di sini
                 });
             });
 
             function formData() {
                 return {
-                    title: '',
-                    slug: '',
-                    imagePreview: '',
-                    showMeta: false,
+                    title: '{{ old('title') }}',
+                    slug: '{{ old('slug') }}',
+                    imagePreview: '{{ old('imagePreview') }}',
+                    showMeta: false, // Ensure this is false by default to keep checkbox unchecked initially
                     generateSlug() {
                         this.slug = this.title
                             .toLowerCase()
