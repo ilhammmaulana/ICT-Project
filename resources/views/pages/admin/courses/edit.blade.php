@@ -88,7 +88,8 @@
                         <form action="{{ route('admin.courses.edit', $course) }}" method="GET" id="search_form">
                             <label class="input input-bordered flex items-center gap-2" for="searchModule">
                                 <input type="text" class="grow input  focus:border-none active:border-none"
-                                    placeholder="Search" name="searchModule" id="module-search-input" value="{{ request('searchModule') }}"/>
+                                    placeholder="Search" name="searchModule" id="module-search-input"
+                                    value="{{ request('searchModule') }}" />
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                                     class="h-4 w-4 opacity-70">
                                     <path fill-rule="evenodd"
@@ -100,13 +101,74 @@
                         <x-course-modules.create-course-module-modal :courseId="$course->id" />
                     </div>
                     <div id="module_container" class="mt-5">
+
                         @foreach ($course->modules as $module)
+                            @foreach ($module->moduleContents as $content)
+                                @if ($content->content_type === 'LINK')
+                                    @if ($content->content)
+                                        @php
+                                            $youtubeEmbedUrl = null;
+
+                                            // Check if the link is a YouTube URL and extract the video ID
+                                            if (
+                                                str_contains($content->content, 'youtube.com') ||
+                                                str_contains($content->content, 'youtu.be')
+                                            ) {
+                                                $urlParts = parse_url($content->content);
+
+                                                if (
+                                                    isset($urlParts['host']) &&
+                                                    str_contains($urlParts['host'], 'youtu.be')
+                                                ) {
+                                                    // Shortened YouTube link (e.g., https://youtu.be/VIDEO_ID)
+                                                    $videoId = ltrim($urlParts['path'], '/');
+                                                } elseif (isset($urlParts['query'])) {
+                                                    // Standard YouTube link (e.g., https://www.youtube.com/watch?v=VIDEO_ID)
+                                                    parse_str($urlParts['query'], $queryParts);
+                                                    $videoId = $queryParts['v'] ?? null;
+                                                }
+
+                                                // Construct the embed URL if we have a video ID
+                                                if (isset($videoId)) {
+                                                    $youtubeEmbedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                                                }
+                                            }
+                                        @endphp
+
+                                        {{-- Embed YouTube video if a YouTube link is detected --}}
+                                        @if ($youtubeEmbedUrl)
+                                            <div class="rounded-lg mb-5">
+                                                <iframe width="560" height="315" src="{{ $youtubeEmbedUrl }}"
+                                                    frameborder="0"
+                                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowfullscreen class=" overflow-hidden"></iframe>
+                                                <div class="mt-1">
+                                                    <p>Uploaded At: {{ $content->created_at }}</p>
+                                                    {{-- <x-module-contents.edit-module-content-modal :moduleId="$module->id" /> --}}
+
+                                                </div>
+                                            </div>
+                                        @else
+                                            {{-- If not a YouTube URL, show the link as text or regular link --}}
+                                            <a href="{{ $content->content }}" target="_blank"
+                                                class="link text-sky-800"
+                                                style="color: mediumblue">{{ $content->content }}</a>
+                                        @endif
+                                    @endif
+                                @endif
+                            @endforeach
+                        @endforeach
+                        {{-- @foreach ($course->modules as $module)
                             <div class="flex justify-between items-center px-4 py-4 border rounded-lg mb-2">
                                 <p>{{ $module->title }}</p>
-                                <a class="btn btn-primary btn-sm"
-                                    href="{{ route('admin.course-modules.edit', $module->id) }}">Edit</a>
+                                <div class="flex items-center gap-3">
+                                    <x-edit-button href="{{ route('admin.course-modules.edit', $module->id) }}"
+                                        class="btn-sm" />
+
+                                    <x-modal.delete-modal :id="$module->id" :action="route('admin.course-modules.destroy', $module)" :class="'btn-sm'" />
+                                </div>
                             </div>
-                        @endforeach
+                        @endforeach --}}
                     </div>
 
                 </div>

@@ -30,7 +30,7 @@
         </a>
 
     </div>
-   
+
     <div class="relative overflow-hidden rounded mt-10">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -120,8 +120,10 @@
 
                         </td>
                         <td class="px-6 py-4 flex gap-3">
-                            <x-edit-button href="{{ route('admin.courses.edit', $course) }}">
-                            </x-edit-button>
+                            <x-detail-button href="{{ route('admin.courses.show', $course) }}" />
+
+                            <x-edit-button href="{{ route('admin.courses.edit', $course) }}" />
+
                             <x-modal.delete-modal :id="$course->id" :action="route('admin.courses.destroy', $course->id)" />
                         </td>
                     </tr>

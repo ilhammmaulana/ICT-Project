@@ -12,11 +12,16 @@ class Module extends Model
     protected $fillable = ['id', 'course_id', 'title', 'description'];
     public function moduleContents()
     {
-        // return $this->hasMany(ModuleContent::class, 'module_id');
-        return $this->hasOne(ModuleContent::class, 'module_id');
+        return $this->hasMany(ModuleContent::class, 'module_id');
+        // return $this->hasOne(ModuleContent::class, 'module_id');
     }
     public function course()
     {
         return $this->belongsTo(Course::class, 'course_id');
+    }
+
+    public function author ()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

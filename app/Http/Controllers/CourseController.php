@@ -100,8 +100,16 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
+        $searchModule = request()->input('searchModule', '');
+        $course = Course::with([
+            'modules' => function ($query) use ($searchModule) {
+                $query->where('title', 'like', '%' . $searchModule . '%');
+            }
+        ])->where('id', $course->id)->first();
+
         return view('pages.admin.courses.show', [
-            'course' => $course
+            'course' => $course,
+            'course_categories' => CourseCategory::all(),
         ]);
     }
 
@@ -111,9 +119,11 @@ class CourseController extends Controller
     public function edit(Request $request, Course $course)
     {
         $searchModule = $request->input('searchModule', '');
-        $course = Course::with(['modules' => function ($query) use ($searchModule) {
-            $query->where('title', 'like', '%' . $searchModule . '%');
-        }])->where('id', $course->id)->first();
+        $course = Course::with([
+            'modules' => function ($query) use ($searchModule) {
+                $query->where('title', 'like', '%' . $searchModule . '%');
+            }
+        ])->where('id', $course->id)->first();
 
         return view('pages.admin.courses.edit', [
             'course' => $course,
@@ -136,7 +146,7 @@ class CourseController extends Controller
                 'image' => 'nullable|image:max:4096:mimes:png,jpg,jpeg',
                 'course_category_id' => 'required|exists:course_categories,id',
             ]);
-            
+
             $slug = Str::slug($validate['name']);
 
             $same_slug_count = Course::where('slug', $slug)->count();
