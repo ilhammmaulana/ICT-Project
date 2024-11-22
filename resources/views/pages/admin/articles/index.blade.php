@@ -10,7 +10,6 @@
                     <span>
                         Create Article
                     </span>
-
                 </x-button>
                 <label class="input input-bordered flex items-center gap-2">
                     <input type="text" class="grow" placeholder="Search" />
@@ -30,6 +29,7 @@
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>Image</th>
                     <th>Title</th>
                     <th>Created At</th>
                     <th>Updated At</th>
@@ -39,7 +39,12 @@
             <tbody>
                 @foreach ($articles as $article)
                     <tr class="bg-white border-b dark:bg-gray-800">
-                        <th>{{ $loop->iteration }}</th>
+                        <th>{{ $loop->iteration + ($articles->currentPage() - 1) * $articles->perPage() }}</th>
+                        <th>
+                            <div class="w-24 h-24 overflow-hidden relative group">
+                                <img src="{{ url('/storage/' . $article->image) }}" alt="{{ $article->title }}">
+                            </div>
+                        </th>
                         <td>{{ $article->title }}</td>
                         <td>{{ $article->created_at ?? '-' }}</td>
                         <td>{{ $article->updated_at ?? '-' }}</td>
@@ -52,13 +57,39 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="flex justify-center">
-            <div class="join mt-5">
-                <input class="join-item btn btn-square" type="radio" name="options" aria-label="1"
-                    checked="checked" />
-                <input class="join-item btn btn-square" type="radio" name="options" aria-label="2" />
-                <input class="join-item btn btn-square" type="radio" name="options" aria-label="3" />
-                <input class="join-item btn btn-square" type="radio" name="options" aria-label="4" />
+
+        <!-- DaisyUI Join Pagination -->
+        <div class="flex justify-center mt-5">
+            <div class="join">
+                @if ($articles->onFirstPage())
+                    <span
+                        class="join-item btn btn-square tab-disabled dark:bg-dark-eval-0 bg-gray-300 hover:bg-gray-300">
+                        <x-icons.chevron-left></x-icons.chevron-left>
+                    </span>
+                @else
+                    <a class="join-item btn btn-square" href="{{ $articles->previousPageUrl() }}" aria-label="Previous">
+                        <x-icons.chevron-left></x-icons.chevron-left>
+                    </a>
+                @endif
+
+                @foreach ($articles->getUrlRange(1, $articles->lastPage()) as $page => $url)
+                    <a class="join-item btn btn-square {{ $page == $articles->currentPage() ? 'btn-primary' : '' }}"
+                        href="{{ $url }}" aria-label="Page {{ $page }}">
+                        {{ $page }}
+                    </a>
+                @endforeach
+
+                @if ($articles->hasMorePages())
+                    <a class="join-item btn btn-square" href="{{ $articles->nextPageUrl() }}" aria-label="Next">
+                        <x-icons.chevron-right></x-icons.chevron-right>
+                    </a>
+                @else
+                    <span
+                        class="join-item btn btn-square tab-disabled dark:bg-dark-eval-0 bg-gray-300 hover:bg-gray-300"
+                        type="radio" aria-label="Last">
+                        <x-icons.chevron-right></x-icons.chevron-right>
+                        <span>
+                @endif
             </div>
         </div>
     </div>

@@ -41,9 +41,16 @@
                         placeholder="Slug otomatis diisi" disabled />
                     <x-form.error :messages="$errors->get('slug')" />
                 </div>
+                <div class="form-group col-span-2">
+                    <x-form.label class="mb-2" for="category_id" :value="__('Slug')" />
+                    <x-form.select required :options="$articleCategories" valueKey="id" displayKey="name" id="article_category_id"
+                        name="article_category_id" type="text" x-model="article_category_id" readonly
+                        placeholder="Pilih Category" />
+                    <x-form.error :messages="$errors->get('article_category_id')" />
+                </div>
                 <div class="form-control">
                     <label class="label cursor-pointer">
-                        <span class="label-text">Advanced Settings</span>
+                        <span class="label-text text-black dark:text-slate-200">Advanced Settings</span>
                         <!-- Hidden input for unchecked state -->
                         <input type="hidden" name="advance_settings" value="false">
                         <!-- Checkbox input for checked state -->
@@ -78,6 +85,7 @@
                     <textarea id="meta_description" name="meta_description" class="textarea textarea-bordered w-full"
                         placeholder="Masukkan Meta Description...">{{ old('meta_description') }}</textarea>
                     <x-form.error :messages="$errors->get('meta_description')" />
+
                 </div>
             </div>
 

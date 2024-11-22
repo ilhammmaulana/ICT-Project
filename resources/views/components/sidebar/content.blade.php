@@ -26,7 +26,6 @@
             <x-slot name="icon">
                 <x-icons.news class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </x-slot>
-
             <x-sidebar.sublink title="Manage Articles" href="{{ route('admin.articles.index') }}" :active="request()->routeIs('admin.articles.index')" />
             <x-sidebar.sublink title="Article Categories" href="{{ route('admin.articles.index') }}" :active="request()->routeIs('admin.articles.index')" />
         </x-sidebar.dropdown>

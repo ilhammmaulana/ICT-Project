@@ -20,19 +20,19 @@ module.exports = {
         themeRoot: ":root",
         themes: [
             {
-                mytheme: {
-
-                    "primary": "#3fa2f6",
-                    "secondary": "#fde047",
-                    "accent": "#00ffff",
-                    "neutral": "#ff00ff",
-                    "base-100": "#ffffff",
-                    "info": "#0000ff",
-                    "success": "#00ff00",
-                    "warning": "#00ff00",
-                    "error": "#ff0000",
+                light: {
+                    ...require("daisyui/src/theming/themes")["light"],
+                    primary: "#5FB4F7",
+                    secondary: "teal",
+                },
+                dark: {
+                    ...require("daisyui/src/theming/themes")["dark"],
+                    primary: "#5FB4F7",
+                    secondary: "teal",
                 },
             },
+
+
         ],
     },
     theme: {
@@ -42,7 +42,6 @@ module.exports = {
             },
 
             colors: {
-                primary: '#000',
                 dark: {
                     "eval-0": "#151823",
                     "eval-1": "#222738",
@@ -50,12 +49,13 @@ module.exports = {
                     "eval-3": "#2C3142",
                 },
                 theme: {
-                    400: "#5FB4F7",
-                    500: "#3FA2F6",
-                    600: "#3181C5",
+                    400: "#5FB4F7", // Shade lebih terang dari 500
+                    500: "#3FA2F6", // Warna dasar
+                    600: "#3181C5", // Shade lebih gelap dari 500
                 },
             },
         },
     },
+
     plugins: [require("daisyui")],
 };
