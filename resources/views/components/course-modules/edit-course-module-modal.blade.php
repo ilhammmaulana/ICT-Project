@@ -12,7 +12,7 @@
             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form> --}}
 
-        <h3 class="text-lg font-bold">Edit Module {{ $module->id }}</h3>
+        <h3 class="text-lg font-bold">Edit Module</h3>
         <form action="{{ route('admin.course-modules.update', $module) }}" method="POST">
             @method('PUT')
             @csrf
@@ -66,7 +66,7 @@
             <div class="flex justify-between items-center gap-3 mt-5">
                 <div>
                     <button class="btn btn-cricle"
-                        onclick="document.getElementById('{{ 'add_new_course_module_link' . str_replace('-', '_', $module->id) }}').showModal()"
+                        onclick="document.getElementById('{{ 'add_new_course_module_link_edit' . str_replace('-', '_', $module->id) }}').showModal()"
                         type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
@@ -75,7 +75,8 @@
                         </svg>
                     </button>
 
-                    <dialog id="{{ 'add_new_course_module_link' . str_replace('-', '_', $module->id) }}"
+
+                    <dialog id="{{ 'add_new_course_module_link_edit' . str_replace('-', '_', $module->id) }}"
                         class="modal">
                         <div class="modal-box ">
                             <h3 class="text-base font-bold">Add Link</h3>
@@ -83,16 +84,16 @@
                                 <div class="mt-5 mb-2">
                                     <label for="content_type" class="text-sm block" for="content_type">Link</label>
                                     <input type="text" class="input input-bordered w-full max-full mt-2 text-sm"
-                                        id="module_content_link_input{{ str_replace('-', '_', $module->id) }}"
+                                        id="module_content_link_input_edit{{ str_replace('-', '_', $module->id) }}"
                                         name="module_content_link" />
                                 </div>
 
                                 <div class="flex justify-end gap-3 mt-5 text-sm">
                                     <button class="btn" type="button"
-                                        id="{{ 'create-link-close-btn' . str_replace('-', '_', $module->id) }}"
-                                        onclick="document.getElementById('{{ 'add_new_course_module_link' . str_replace('-', '_', $module->id) }}').close()">Close</button>
+                                        id="{{ 'create-link-close-btn_edit' . str_replace('-', '_', $module->id) }}"
+                                        onclick="document.getElementById('{{ 'add_new_course_module_link_edit' . str_replace('-', '_', $module->id) }}').close()">Close</button>
                                     <button class="btn btn-active btn-primary"
-                                        id="{{ 'create-content-button-submit-btn' . str_replace('-', '_', $module->id) }}"
+                                        id="{{ 'create-content-button-submit-btn-edit' . str_replace('-', '_', $module->id) }}"
                                         type="button"
                                         data-module-id ="{{ str_replace('-', '_', $module->id) }}">Submit</button>
                                 </div>
@@ -113,93 +114,91 @@
 </dialog>
 
 <script>
-    const contents = @json($contents);
-    const linksEdit = {};
+    window.contents = {};
+    window.linksEdit = {};
 
-    contents.forEach(content => {
-        linksEdit[content.module_id.replace('-', '_')] = [...linksEdit[content.module_id] || [], content];
-    })
+    window.deleteLinkEdit = (index, moduleId) => {
+        window.linksEdit[moduleId].splice(index, 1);
+        window.renderLinkPreviewEdit(moduleId);
+    };
 
-    console.log(linksEdit)
+    window.renderLinkPreviewEdit = (moduleId) => {
+        const linksEditContainer = document.querySelector(
+            `.linksEdit-container${moduleId}`
+        );
+        const linksEditHidden = document.getElementById(`linksEdit${moduleId}`);
 
-    linksEdit['{{ str_replace('-', '_', $module->id) }}'] = [];
+        // Clear existing content before appending
+        linksEditContainer.innerHTML = "";
+        linksEditHidden.innerHTML = "";
 
-
-    const deleteLinkEdit = (index, moduleId) => {
-
-        console.log(index)
-        console.log(linksEdit[moduleId])
-        linksEdit[moduleId].splice(index, 1);
-        renderLinkPreviewEdit(moduleId);
-        console.log(linksEdit)
-    }
-
-    const renderLinkPreviewEdit = (moduleId) => {
-        const linksEditContainer = document.querySelector('.linksEdit-container' + moduleId);
-
-        linksEditContainer.innerHTML = '';
-
-        if (linksEdit[moduleId]) {
-            linksEdit[moduleId].forEach(link => {
-                console.log(link)
+        if (window.linksEdit[moduleId]) {
+            window.linksEdit[moduleId].forEach((link, index) => {
                 linksEditContainer.innerHTML += `
-                <div class="flex items-center justify-between">
-                    <div class="flex gap-2 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-                        </svg>
-                        <a href="${link}" target="_blank" rel="noopener noreferrer" class="link link-primary">${link}</a>
-                    </div>
-                    <button class="btn btn-circle" onclick="deleteLinkEdit(${linksEdit[moduleId].indexOf(link)}, ${moduleId})" type="button">
-                        X
-                    </button>
-                </div>`;
-            });
+            <div class="flex items-center justify-between">
+                <div class="flex gap-2 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                    </svg>
+                    <a href="${link}" target="_blank" rel="noopener noreferrer" class="link link-primary">${link}</a>
+                </div>
+                <button class="btn btn-circle" onclick="window.deleteLinkEdit(${index}, '${moduleId}')" type="button">
+                    X
+                </button>
+            </div>`;
 
-            const linksEditHidden = document.getElementById("linksEdit" + moduleId);
-
-            linksEdit[moduleId].forEach(link => {
-                linksEditHidden.innerHTML += `
-                <input type="hidden" name="module_content_links[]" value="${link}">`;
+                linksEditHidden.innerHTML +=
+                    `<input type="hidden" name="module_content_links[]" value="${link}">`;
             });
         }
-    }
+    };
+</script>
+<script>
+    window.contents["{{ str_replace('-', '_', $module->id) }}"] = @json($contents);
 
+    window.contents["{{ str_replace('-', '_', $module->id) }}"].forEach(content => {
+            const moduleId = content.module_id.replace(/-/g, '_');
+            window.linksEdit[moduleId] = [...window.linksEdit[moduleId] || [], content.content];
+        }
+    )
 
-
-    const inputLinkEdit = document.getElementById('module_content_link_input' +
-        '{{ str_replace('-', '_', $module->id) }}');
-
-
-    const submitLinkEdit = document.getElementById('create-content-button-submit-btn' +
-        '{{ str_replace('-', '_', $module->id) }}');
-
-    const closeInputLinkEdit = document.getElementById('create-link-close-btn' +
-        '{{ str_replace('-', '_', $module->id) }}');
-
-    submitLinkEdit.addEventListener('click', (event) => {
-
+    document.getElementById('create-content-button-submit-btn-edit' +
+        '{{ str_replace('-', '_', $module->id) }}').addEventListener('click', (event) => {
         const moduleId = event.target.getAttribute('data-module-id');
-        const link = inputLinkEdit.value;
+        const link = document.getElementById('module_content_link_input_edit' +
+            '{{ str_replace('-', '_', $module->id) }}').value;
+
         if (link === '') {
             alert('Please enter a link');
             return;
         }
 
+        window.contents["{{ str_replace('-', '_', $module->id) }}"] = @json($contents);
 
-        if (!linksEdit[moduleId]) {
-            linksEdit[moduleId] = [];
+
+        if (!window.linksEdit[moduleId]) {
+            window.contents["{{ str_replace('-', '_', $module->id) }}"].forEach(content => {
+                    const moduleId = content.module_id.replace(/-/g, '_');
+                    window.linksEdit[moduleId] = [...window.linksEdit[moduleId] || [], content.content];
+                }
+            )
+
+            if (!window.linksEdit[moduleId]) {
+                window.linksEdit[moduleId] = [];
+            }
+
         }
 
-        linksEdit[moduleId].push(link);
-        inputLinkEdit.value = '';
+        window.linksEdit[moduleId].push(link);
+        document.getElementById('module_content_link_input_edit' +
+            '{{ str_replace('-', '_', $module->id) }}').value = '';
 
-        console.log(linksEdit)
-        closeInputLinkEdit.click();
+        document.getElementById('create-link-close-btn_edit' +
+            '{{ str_replace('-', '_', $module->id) }}').click();
 
         document.getElementById('linksEdit-preview' + moduleId).style.display = 'block';
-        renderLinkPreviewEdit(moduleId);
+        window.renderLinkPreviewEdit(moduleId);
     });
 </script>

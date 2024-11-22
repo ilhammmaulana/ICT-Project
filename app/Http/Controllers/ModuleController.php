@@ -33,6 +33,7 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         try {
+            Log::info($request->all());
             $validate = $request->validate([
                 'title' => 'required|string',
                 'course_id' => 'required|exists:courses,id',
