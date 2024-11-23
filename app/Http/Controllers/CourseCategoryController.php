@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\CourseCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class CourseCategoryController extends Controller
 {
@@ -13,7 +12,9 @@ class CourseCategoryController extends Controller
      */
     public function index()
     {
-        $course_categories = CourseCategory::all();
+        $search = request()->query('search', '');
+
+        $course_categories = CourseCategory::where('name', 'like', '%' . $search . '%')->get();
         return view('pages.admin.course-categories.index', compact('course_categories'));
     }
 
@@ -78,6 +79,7 @@ class CourseCategoryController extends Controller
                 'name' => $validate['name'],
             ]);
 
+            $courseCategory->fresh();
             return redirect()->route('admin.course-categories.index');
         } catch (\Throwable $th) {
             //throw $th;

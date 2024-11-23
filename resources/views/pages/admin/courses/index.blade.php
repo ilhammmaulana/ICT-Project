@@ -12,7 +12,7 @@
         <form action="{{ route('admin.courses.index') }}" method="GET">
             <label class="input input-bordered input-info flex items-center gap-2" for="search">
                 <input type="text" class="grow input  focus:border-none active:border-none" placeholder="Search"
-                    name="search" />
+                    name="search"  value="{{ request('search') }}"/>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                     class="h-4 w-4 opacity-70">
                     <path fill-rule="evenodd"
@@ -110,7 +110,6 @@
                         </td>
                         <td>
                             {{ $course->updated_at ?? '-' }}
-
                         </td>
                         <td class="px-6 py-4 flex gap-3">
                             <x-detail-button href="{{ route('admin.courses.show', $course) }}" />

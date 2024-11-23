@@ -1,4 +1,5 @@
-<button class="p-2 {{ $class ?? '' }}" onclick="document.getElementById('{{ str_replace('-', '_', $id) }}').showModal()">
+<button class="btn btn-sm {{ $class ?? '' }}"
+    onclick="document.getElementById('{{ str_replace('-', '_', $id) . '_destroy' }}').showModal()">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="size-4">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -7,7 +8,7 @@
 
 </button>
 
-<dialog id="{{ str_replace('-', '_', $id) }}" class="modal">
+<dialog id="{{ str_replace('-', '_', $id) . '_destroy' }}" class="modal">
     <div class="modal-box w-11/12 max-w-xl">
         <form action="{{ $action }}" method="POST" class="">
             @method('delete')
@@ -26,7 +27,7 @@
             </p>
             <div class="flex justify-end gap-3 mt-12">
                 <button class="btn" type="button"
-                    onclick="document.getElementById('{{ str_replace('-', '_', $id) }}').close()">Cancel</button>
+                    onclick="document.getElementById('{{ str_replace('-', '_', $id) . '_destroy' }}').close()">Cancel</button>
                 <button class="btn btn-active btn-error text-white dark:text-black">Delete</button>
             </div>
         </form>

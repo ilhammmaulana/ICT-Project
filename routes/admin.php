@@ -46,7 +46,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::prefix('course-categories')->group(function () {
         Route::get('/', [CourseCategoryController::class, 'index'])->name('admin.course-categories.index');
+        Route::post('/', [CourseCategoryController::class, 'store'])->name('admin.course-categories.store');
+        Route::put('/{course_category}', [CourseCategoryController::class, 'update'])->name('admin.course-categories.update');
         Route::get('/{course_category}', [CourseCategoryController::class, 'show'])->name('admin.course-categories.edit');
-        Route::delete('/{course_category}', [CourseCategoryController::class, 'show'])->name('admin.course-categories.edit');
+        Route::delete('/{course_category}', [CourseCategoryController::class, 'destroy'])->name('admin.course-categories.destroy');
     });
 });
