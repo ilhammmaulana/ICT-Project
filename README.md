@@ -62,16 +62,17 @@ Follow these steps to set up and run the project locally:
      php artisan migrate
      ```
 
-7. ### Install Frontend Dependencies (Optional)
+7. ### Install Frontend Dependencies
 
    If your project requires frontend assets, install the Node.js packages and build the assets:
 
    ```bash
    npm install
-   npm run build
+   npm run dev (for development)
+   npm run build (for production)
    ```
 
-8. ### Serve the Application
+8. ### Serve the Application 
 
    Start the Laravel development server:
 
