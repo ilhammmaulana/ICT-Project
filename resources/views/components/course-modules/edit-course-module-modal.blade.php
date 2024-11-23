@@ -34,7 +34,7 @@
             </div>
 
             <div class="mt-5 mb-2" id="{{ 'linksEdit-preview' . str_replace('-', '_', $module->id) }}">
-                <label for="description" class="text-base block">LinksEdit</label>
+                <label for="description" class="text-base block">Links</label>
 
                 <div class="hidden" id="{{ 'linksEdit' . str_replace('-', '_', $module->id) }}">
                     @foreach ($module->moduleContents as $content)
@@ -43,7 +43,7 @@
                 </div>
                 <div class="{{ 'linksEdit-container' . str_replace('-', '_', $module->id) }}">
                     @foreach ($module->moduleContents as $content)
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between mb-2">
                             <div class="flex gap-2 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -92,7 +92,7 @@
                                     <button class="btn" type="button"
                                         id="{{ 'create-link-close-btn_edit' . str_replace('-', '_', $module->id) }}"
                                         onclick="document.getElementById('{{ 'add_new_course_module_link_edit' . str_replace('-', '_', $module->id) }}').close()">Close</button>
-                                    <button class="btn btn-active btn-primary"
+                                    <button class="btn btn-active btn-primary text-white"
                                         id="{{ 'create-content-button-submit-btn-edit' . str_replace('-', '_', $module->id) }}"
                                         type="button"
                                         data-module-id ="{{ str_replace('-', '_', $module->id) }}">Submit</button>
@@ -106,7 +106,7 @@
                 <div class="flex gap-3 items-center">
                     <button class="btn" type="button"
                         onclick="document.getElementById('{{ 'edit-module-modal' . str_replace('-', '_', $module->id) }}').close()"">Close</button>
-                    <button class="btn btn-active btn-primary">Submit</button>
+                    <button class="btn btn-active btn-primary text-white">Submit</button>
                 </div>
             </div>
         </form>
@@ -135,7 +135,7 @@
         if (window.linksEdit[moduleId]) {
             window.linksEdit[moduleId].forEach((link, index) => {
                 linksEditContainer.innerHTML += `
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between mb-2">
                 <div class="flex gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">

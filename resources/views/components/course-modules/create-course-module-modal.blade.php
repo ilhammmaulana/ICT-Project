@@ -1,4 +1,4 @@
-    <button class="btn btn-primary btn-active" onclick="add_new_course_module_modal.showModal()">Add Module</button>
+    <button class="btn btn-primary btn-active text-white" onclick="add_new_course_module_modal.showModal()">Add Module</button>
     <dialog id="add_new_course_module_modal" class="modal">
         <div class="modal-box w-11/12 max-w-3xl">
             {{-- <form method="dialog">
@@ -96,7 +96,7 @@
 
             links.forEach(link => {
                 linksContainer.innerHTML += `
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between mb-2">
                         <div class="flex gap-2 items-center" >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-6">

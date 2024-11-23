@@ -26,14 +26,14 @@
         {{-- <x-courses.create-course-modal :courses="$course_categories" /> --}}
         {{-- <x-courses.create-course-modal /> --}}
         <a href="{{ route('admin.courses.create') }}">
-            <button class="btn btn-primary btn-active">Add Course</button>
+            <button class="btn btn-primary btn-active text-white">Add Course</button>
         </a>
 
     </div>
 
-    <div class="relative overflow-hidden rounded mt-10">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <div class="overflow-x-auto bg-white dark:bg-gray-800 px-4 py-4 rounded-lg mt-10">
+        <table class="table rounded-xl">
+            <thead>
                 <tr>
                     <th scope="col" class="px-6 py-3">
                         No
@@ -72,34 +72,28 @@
             </thead>
             <tbody>
                 @foreach ($courses as $course)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td class="px-6 py-4">
+                    <tr class="bg-white border-b dark:bg-gray-800">
+                        <td>
                             {{ $loop->iteration }}
                         </td>
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th>
                             {{ $course->name }}
                         </th>
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th>
                             {{ $course->title }}
                         </th>
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th>
                             {{ $course->description }}
                         </th>
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th>
                             {{ $course->meta_title }}
                         </th>
 
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th>
                             {{ $course->meta_description }}
                         </th>
 
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th>
                             @if ($course->image)
                                 <img src="{{ asset($course->image) }}" alt="{{ $course->name }}"
                                     class="rounded max-w-40">
@@ -107,15 +101,14 @@
                                 No Cover Image
                             @endif
                         </th>
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th>
                             {{ $course->courseCategory->name }}
                         </th>
-                        <td class="px-6 py-4">
+                        <td>
                             {{ $course->created_at ?? '-' }}
 
                         </td>
-                        <td class="px-6 py-4">
+                        <td>
                             {{ $course->updated_at ?? '-' }}
 
                         </td>

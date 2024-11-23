@@ -81,7 +81,7 @@
 
             <div class="flex justify-end gap-3 mt-5">
                 <button class="btn" type="button" onclick="edit_course_modal.close()">Close</button>
-                <button class="btn btn-active btn-primary">Submit</button>
+                <button class="btn btn-active btn-primary text-white">Submit</button>
             </div>
         </form>
     </div>

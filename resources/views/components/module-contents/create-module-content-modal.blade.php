@@ -1,4 +1,4 @@
-<button class="btn btn-primary btn-active" onclick="add_new_module_content_modal.showModal()">Add Content</button>
+<button class="btn btn-primary btn-active text-white" onclick="add_new_module_content_modal.showModal()">Add Content</button>
 <dialog id="add_new_module_content_modal" class="modal">
     <div class="modal-box w-11/12 max-w-xl">
         <h3 class="text-lg font-bold">Add New Module Content</h3>
