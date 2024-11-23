@@ -20,36 +20,19 @@ module.exports = {
         themeRoot: ":root",
         themes: [
             {
-                mytheme: {
-
-
-                    "primary": "#3fa2f6",
-
-
-                    "secondary": "#fde047",
-
-
-                    "accent": "#00ffff",
-
-
-                    "neutral": "#ff00ff",
-
-
-                    "base-100": "#ffffff",
-
-
-                    "info": "#0000ff",
-
-
-                    "success": "#00ff00",
-
-
-                    "warning": "#00ff00",
-
-
-                    "error": "#ff0000",
+                light: {
+                    ...require("daisyui/src/theming/themes")["light"],
+                    primary: "#5FB4F7",
+                    secondary: "teal",
+                },
+                dark: {
+                    ...require("daisyui/src/theming/themes")["dark"],
+                    primary: "#5FB4F7",
+                    secondary: "teal",
                 },
             },
+
+
         ],
     },
     theme: {
@@ -73,9 +56,6 @@ module.exports = {
             },
         },
     },
-    daisyui: {
-        themes: ["light", "dark"],
-    },
 
-    plugins: [require("@tailwindcss/forms"), require("daisyui")],
+    plugins: [require("daisyui")],
 };

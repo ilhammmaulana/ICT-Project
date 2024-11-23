@@ -3,6 +3,9 @@
 @import "perfect-scrollbar/css/perfect-scrollbar.css";
 @import "tailwindcss/utilities";
 
+*{
+    /* border: 1px solid greens; */
+}
 .dark .ps__rail-y,
 .dark .ps__rail-x {
     background-color: transparent !important;
@@ -74,13 +77,23 @@
     animation: pulseWarningIns 0.75s infinite alternate;
 }
 
+table th,
+table td {
+    padding: 10px;
+}
+
+.btn:is(input[type="checkbox"]:checked),
+.btn:is(input[type="radio"]:checked) {}
+
 @keyframes scaleWarning {
     0% {
         transform: scale(1);
     }
+
     30% {
         transform: scale(1.02);
     }
+
     100% {
         transform: scale(1);
     }
@@ -92,11 +105,13 @@
         transform: scale(1);
         opacity: 0.5;
     }
+
     30% {
         background-color: #fff;
         transform: scale(1);
         opacity: 0.5;
     }
+
     100% {
         background-color: #f8bb86;
         transform: scale(2);
@@ -108,6 +123,7 @@
     0% {
         background-color: #f8d486;
     }
+
     100% {
         background-color: #f8bb86;
     }

@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'K UI') }}</title>
+    <title>{{ config('app.name', 'KelasGratis.id') }}</title>
+
+    <!-- Optional Head -->
+    @isset($head)
+        {{ $head }}
+    @endisset
 
     <!-- Fonts -->
     <link
@@ -24,25 +30,18 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div
-        x-data="mainState"
-        :class="{ dark: isDarkMode }"
-        x-on:resize.window="handleWindowResize"
-        x-cloak
-    >
+    <div x-data="mainState" :class="{ dark: isDarkMode }" x-on:resize.window="handleWindowResize" x-cloak>
         <div class="min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200">
             <!-- Sidebar -->
             <x-sidebar.sidebar />
 
             <!-- Page Wrapper -->
-            <div
-                class="flex flex-col min-h-screen"
+            <div class="flex flex-col min-h-screen"
                 :class="{
                     'lg:ml-64': isSidebarOpen,
                     'md:ml-16': !isSidebarOpen
                 }"
-                style="transition-property: margin; transition-duration: 150ms;"
-            >
+                style="transition-property: margin; transition-duration: 150ms;">
 
                 <!-- Navbar -->
                 <x-navbar />
@@ -64,5 +63,59 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('success'))
+        <script>
+            const currentTheme = document.documentElement.getAttribute('data-theme'); // Get the current theme
+            console.log(currentTheme);
+            const Toast = Swal.mixin({
+                toast: true,
+                background: currentTheme === 'dark' ? 'black' : 'white', // Set background based on theme
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+
+            Toast.fire({
+                icon: "success",
+                title: "{{ session('success') }}"
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            const currentTheme = document.documentElement.getAttribute('data-theme'); // Get the current theme
+            console.log(currentTheme);
+            const Toast = Swal.mixin({
+                toast: true,
+                background: currentTheme === 'dark' ? 'black' : 'white', // Set background based on theme
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+
+            Toast.fire({
+                icon: "error",
+                title: "{{ session('error') }}"
+            });
+        </script>
+    @endif
+    <!-- Optional Script -->
+    @isset($script)
+        {{ $script }}
+    @endisset
 </body>
+
 </html>

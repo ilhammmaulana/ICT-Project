@@ -1,28 +1,27 @@
-import "./bootstrap";
+import './bootstrap';
 
-import Alpine from "alpinejs";
-import collapse from "@alpinejs/collapse";
-import PerfectScrollbar from "perfect-scrollbar";
+import Alpine from 'alpinejs';
+import collapse from '@alpinejs/collapse';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 window.PerfectScrollbar = PerfectScrollbar;
 
-document.addEventListener("alpine:init", () => {
-    Alpine.data("mainState", () => {
+document.addEventListener('alpine:init', () => {
+    Alpine.data('mainState', () => {
         let lastScrollTop = 0;
+
+        // Initialize scroll behavior
         const init = function () {
-            window.addEventListener("scroll", () => {
-                let st =
-                    window.pageYOffset || document.documentElement.scrollTop;
+            window.addEventListener('scroll', () => {
+                let st = window.pageYOffset || document.documentElement.scrollTop;
                 if (st > lastScrollTop) {
-                    // downscroll
                     this.scrollingDown = true;
                     this.scrollingUp = false;
                 } else {
-                    // upscroll
                     this.scrollingDown = false;
                     this.scrollingUp = true;
-                    if (st == 0) {
-                        //  reset
+                    if (st === 0) {
+                        // Reset
                         this.scrollingDown = false;
                         this.scrollingUp = false;
                     }
@@ -31,21 +30,34 @@ document.addEventListener("alpine:init", () => {
             });
         };
 
+        // Get saved theme from localStorage or system preference
         const getTheme = () => {
-            if (window.localStorage.getItem("dark")) {
-                return JSON.parse(window.localStorage.getItem("dark"));
+            const savedTheme = window.localStorage.getItem('dark');
+            if (savedTheme !== null) {
+                return JSON.parse(savedTheme); // Return saved theme if available
             }
             return (
                 !!window.matchMedia &&
-                window.matchMedia("(prefers-color-scheme: dark)").matches
+                window.matchMedia('(prefers-color-scheme: dark)').matches
             );
         };
+
+        // Set theme in localStorage and apply to document
         const setTheme = (value) => {
-            window.localStorage.setItem("dark", value);
+            window.localStorage.setItem('dark', value);
+            document.documentElement.setAttribute('data-theme', value ? 'dark' : 'light');
         };
+
+        // Initialize theme on page load
+        const initializeTheme = () => {
+            const isDarkMode = getTheme();
+            setTheme(isDarkMode); // Apply and save the theme on load
+            return isDarkMode;
+        };
+
         return {
             init,
-            isDarkMode: getTheme(),
+            isDarkMode: initializeTheme(),
             toggleTheme() {
                 this.isDarkMode = !this.isDarkMode;
                 document

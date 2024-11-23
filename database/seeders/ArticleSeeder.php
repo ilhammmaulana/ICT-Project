@@ -14,6 +14,6 @@ class ArticleSeeder extends Seeder
      */
     public function run(): void
     {
-        Article::factory()->count(10)->withImage()->create();
+        Article::factory()->count(22)->withImage()->create();
     }
 }
