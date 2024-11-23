@@ -122,7 +122,7 @@
                         <td class="px-6 py-4 flex gap-3">
                             <x-detail-button href="{{ route('admin.courses.show', $course) }}" />
 
-                            <x-edit-button href="{{ route('admin.courses.edit', $course) }}" />
+                            {{-- <x-edit-button href="{{ route('admin.courses.edit', $course) }}" /> --}}
 
                             <x-modal.delete-modal :id="$course->id" :action="route('admin.courses.destroy', $course->id)" />
                         </td>

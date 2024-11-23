@@ -137,6 +137,7 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         try {
+            Log::info($request->all());
             $validate = $request->validate([
                 'name' => 'required|string',
                 'meta_title' => 'required|string',
@@ -146,6 +147,8 @@ class CourseController extends Controller
                 'image' => 'nullable|image:max:4096:mimes:png,jpg,jpeg',
                 'course_category_id' => 'required|exists:course_categories,id',
             ]);
+
+
 
             $slug = Str::slug($validate['name']);
 
@@ -163,24 +166,32 @@ class CourseController extends Controller
 
 
                 // delete olg image
-                Storage::delete($course->image);
+                if ($course->image) {
+                    Storage::delete($course->image);
+                }
             }
 
+            Log::info($validate);
 
-            $course->update([
+
+            Log::info($course);
+            Course::where('id', $course->id)->update([
                 'name' => $validate['name'],
                 'slug' => $slug,
                 'meta_title' => $validate['meta_title'],
                 'meta_description' => $validate['meta_description'],
                 'title' => $validate['title'],
                 'description' => $validate['description'],
-                'image' => $validate['image'],
+                'image' => isset($validate['image']) ? $validate['image'] : null,
                 'course_category_id' => $validate['course_category_id'],
                 'created_by' => auth()->user()->id
             ]);
 
-            return redirect()->route('admin.courses.index');
+            // return redirect()->route('admin.courses.index');
+            return redirect()->route('admin.courses.show', ['course' => $course]);
+
         } catch (\Throwable $th) {
+            Log::info($th);
             //throw $th;
         }
     }

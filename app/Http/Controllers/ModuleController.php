@@ -130,6 +130,7 @@ class ModuleController extends Controller
     public function destroy(Module $module)
     {
         $course = Course::find($module->course_id)->first();
+        ModuleContent::where('module_id', $module->id)->delete();
         $module->delete();
         return redirect()->route('admin.courses.edit', ['course' => $course]);
     }
