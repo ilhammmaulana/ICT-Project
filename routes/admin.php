@@ -14,7 +14,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::post('/', [ArticleController::class, 'store'])->name('admin.articles.store');
         Route::get('/{id}/edit', [ArticleController::class, 'edit'])->name('admin.articles.edit');
         Route::put('/{id}', [ArticleController::class, 'update'])->name('admin.articles.udpate');
-        Route::delete('/{id}', [ArticleController::class, 'edit'])->name('admin.articles.edit');
+        Route::delete('/{id}', [ArticleController::class, 'destroy'])->name('admin.articles.destroy');
     });
 
     Route::prefix('courses')->group(function () {

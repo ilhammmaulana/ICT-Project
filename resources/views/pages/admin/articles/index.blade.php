@@ -48,10 +48,18 @@
                         <td>{{ $article->title }}</td>
                         <td>{{ $article->created_at ?? '-' }}</td>
                         <td>{{ $article->updated_at ?? '-' }}</td>
-                        <td>
+                        <td class="flex gap-2">
                             <x-button href="{{ route('admin.articles.edit', $article) }}">
                                 Edit
                             </x-button>
+                            <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <x-button type="submit" variant="danger"
+                                    href="{{ route('admin.articles.edit', $article) }}">
+                                    Delete
+                                </x-button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
@@ -67,7 +75,8 @@
                         <x-icons.chevron-left></x-icons.chevron-left>
                     </span>
                 @else
-                    <a class="join-item btn btn-square" href="{{ $articles->previousPageUrl() }}" aria-label="Previous">
+                    <a class="join-item btn btn-square" href="{{ $articles->previousPageUrl() }}"
+                        aria-label="Previous">
                         <x-icons.chevron-left></x-icons.chevron-left>
                     </a>
                 @endif

@@ -4,6 +4,7 @@
     'displayKey' => 'name', // Key untuk menampilkan label
     'disabled' => false,
     'withicon' => false,
+    'value' => '',
 ])
 
 @php
@@ -21,6 +22,7 @@
 ]) !!}>
     <option selected disabled>Pilih opsi</option>
     @foreach ($options as $option)
-        <option value="{{ $option[$valueKey] }}">{{ $option[$displayKey] }}</option>
+        <option value="{{ $option[$valueKey] }}" @if ($option[$valueKey] === $value) selected @endif>
+            {{ $option[$displayKey] }}</option>
     @endforeach
 </select>
