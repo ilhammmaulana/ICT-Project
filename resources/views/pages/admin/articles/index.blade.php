@@ -66,7 +66,6 @@
             </tbody>
         </table>
 
-        <!-- DaisyUI Join Pagination -->
         <div class="flex justify-center mt-5">
             <div class="join">
                 @if ($articles->onFirstPage())
