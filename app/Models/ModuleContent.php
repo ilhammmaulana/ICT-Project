@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ModuleContent extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
     protected $fillable = ['id', 'module_id', 'content_type', 'content'];
     public function module()
     {

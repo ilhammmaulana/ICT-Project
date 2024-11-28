@@ -14,12 +14,12 @@
                 <input type="text" placeholder="Your course name" class="input input-bordered w-full max-full mt-2"
                     id="course-name-input" name="name" required />
             </div>
-            <div class="mt-5 mb-2">
+            <qdiv class="mt-5 mb-2">
                 <label for="title" class="text-base block">Course Title</label>
                 <input type="text" placeholder="Your course title" class="input input-bordered w-full max-full mt-2"
                     id="course-title-input" name="title" required />
 
-            </div>
+            </qdiv>
             <div class="mt-5 mb-2">
                 <label for="description" class="text-base block">Course Description</label>
                 {{-- <input type="text" placeholder="Your course description"

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Module;
+use App\Models\ModuleContent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ModuleController extends Controller
@@ -35,21 +38,35 @@ class ModuleController extends Controller
                 'title' => 'required|string',
                 'course_id' => 'required|exists:courses,id',
                 'description' => 'nullable|string',
+                'module_content_links' => 'nullable|array',
             ]);
 
-            Module::create([
-
+            $module = Module::create([
                 'course_id' => $validate['course_id'],
                 'title' => $validate['title'],
                 'description' => $validate['description'],
             ]);
 
-            return redirect()->route('admin.courses.edit', ['course' => $validate['course_id']]);
-            
+            if (isset($validate['module_content_links'])) {
+                foreach ($validate['module_content_links'] as $module_content_link) {
+                    $module_content = new ModuleContent();
+                    $module_content->content_type = 'LINK';
+                    $module_content->module_id = $module->id;
+                    $module_content->content = $module_content_link;
+                    $module_content->save();
+                }
+            }
+
+            // Pass success message to the next request
+            return redirect()->route('admin.courses.show', ['course' => $validate['course_id']])
+                ->with('success', 'Module added successfully!');
         } catch (\Throwable $th) {
             Log::error($th);
-            //throw $th;
+            // Pass error message to the next request
+            return redirect()->route('admin.courses.show', ['course' => $validate['course_id']])
+                ->with('error', 'Something went wrong, please try again.');
         }
+
     }
 
     /**
@@ -65,7 +82,7 @@ class ModuleController extends Controller
     public function edit($id)
     {
         $module = Module::find($id)->first();
-        return redirect()->route('admin.courses.edit', ['course' => $module->course_id]);
+        return view('pages.admin.course-modules.edit', compact('module'));
     }
 
     /**
@@ -74,16 +91,36 @@ class ModuleController extends Controller
     public function update(Request $request, Module $module)
     {
         try {
+            Log::info($request->all());
             $validate = $request->validate([
                 'title' => 'required|string',
                 'course_id' => 'required|exists:courses,id',
                 'description' => 'nullable|string',
+                'module_content_links' => 'nullable|array',
             ]);
 
             $module->update($validate);
-            
+
+            DB::beginTransaction();
+            ModuleContent::where('module_id', $module->id)->delete();
+
+            if (isset($validate['module_content_links'])) {
+                foreach ($validate['module_content_links'] as $module_content_link) {
+                    $module_content = new ModuleContent();
+                    $module_content->content_type = 'LINK';
+                    $module_content->module_id = $module->id;
+                    $module_content->content = $module_content_link;
+                    $module_content->save();
+                }
+            }
+            DB::commit();
+
+            return redirect()->route('admin.courses.show', ['course' => $validate['course_id']])
+                ->with('success', 'Module updated successfully!');
+
         } catch (\Throwable $th) {
-            //throw $th;
+            return redirect()->route('admin.courses.show', ['course' => $validate['course_id']])
+                ->with('error', 'Something went wrong, please try again.');
         }
     }
 
@@ -92,6 +129,9 @@ class ModuleController extends Controller
      */
     public function destroy(Module $module)
     {
+        $course = Course::find($module->course_id)->first();
+        ModuleContent::where('module_id', $module->id)->delete();
         $module->delete();
+        return redirect()->route('admin.courses.edit', ['course' => $course]);
     }
 }

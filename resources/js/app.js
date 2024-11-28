@@ -26,7 +26,7 @@ document.addEventListener('alpine:init', () => {
                         this.scrollingUp = false;
                     }
                 }
-                lastScrollTop = st <= 0 ? 0 : st; // For mobile or negative scrolling
+                lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
             });
         };
 
@@ -60,6 +60,12 @@ document.addEventListener('alpine:init', () => {
             isDarkMode: initializeTheme(),
             toggleTheme() {
                 this.isDarkMode = !this.isDarkMode;
+                document
+                    .getElementsByTagName("html")[0]
+                    .setAttribute(
+                        "data-theme",
+                        this.isDarkMode ? "dark" : "light"
+                    );
                 setTheme(this.isDarkMode);
             },
             isSidebarOpen: window.innerWidth > 1024,
