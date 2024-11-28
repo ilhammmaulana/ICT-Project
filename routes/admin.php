@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\ArticleCategoryController;
-use App\Http\Controllers\CourseCategoryController;
-use App\Http\Controllers\CourseController;
+use App\Http\Controllers\Admin\CourseCategoryController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\ModuleContentController;
 use App\Http\Controllers\ModuleController;
 use Illuminate\Support\Facades\Route;
