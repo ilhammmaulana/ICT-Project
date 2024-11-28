@@ -169,7 +169,7 @@ class ArticleController extends Controller
                 'meta_keyword' => $validatedData['meta_keyword'] ?? null,
                 'meta_description' => $validatedData['meta_description'] ?? null,
                 'image' => $imagePath ?? null,
-            ]);
+                ]);
             return redirect()->route('admin.articles.index')->with('success', 'Success update article!');
         } catch (\Throwable $th) {
             throw $th;

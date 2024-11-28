@@ -1,4 +1,4 @@
-<div class="flex justify-center mt-5">
+{{-- <div class="flex justify-center mt-5">
     <div class="join">
         @if ($articles->onFirstPage())
             <span class="join-item btn btn-square tab-disabled dark:bg-dark-eval-0 bg-gray-300 hover:bg-gray-300">
@@ -28,4 +28,4 @@
                 <span>
         @endif
     </div>
-</div>
+</div> --}}
