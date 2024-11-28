@@ -22,12 +22,15 @@
             </x-slot>
         </x-sidebar.link>
 
-        <x-sidebar.dropdown title="Article" :active="Str::startsWith(request()->route()->uri(), 'buttons')">
+        <x-sidebar.dropdown title="Article" :active="request()->routeIs('admin.articles.index') ||
+            request()->routeIs('admin.articles.create') ||
+            request()->routeIs('admin.articles.edit')">
             <x-slot name="icon">
                 <x-icons.news class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </x-slot>
             <x-sidebar.sublink title="Manage Articles" href="{{ route('admin.articles.index') }}" :active="request()->routeIs('admin.articles.index')" />
-            <x-sidebar.sublink title="Article Categories" href="{{ route('admin.articles.index') }}" :active="request()->routeIs('admin.articles.index')" />
+            <x-sidebar.sublink title="Article Categories" href="{{ route('admin.article-categories.index') }}"
+                :active="request()->routeIs('admin.articles.index')" />
         </x-sidebar.dropdown>
         {{-- <x-sidebar.link title="Users" href="{{ route('admin.articles.index') }}" :isActive="request()->routeIs('admin.articles.index')">
             <x-slot name="icon">

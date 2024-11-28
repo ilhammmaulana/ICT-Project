@@ -5,6 +5,18 @@
     </x-slot>
 
     <x-slot name="header">
+        <style>
+            .form-group ul li {
+                list-style: disc;
+            }
+
+            .form-group ol li {
+                list-style: decimal !important;
+                /* Gaya angka untuk <ol> */
+                margin-left: 1.5rem;
+                /* Indentasi untuk tata letak */
+            }
+        </style>
         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <h2 class="text-xl font-semibold leading-tight">
                 {{ __('Edit Article') }}
@@ -91,10 +103,8 @@
             <!-- Content (Trix Editor) -->
             <div class="form-group">
                 <x-form.label class="mb-2" for="content" :value="__('Content')" />
-                <!-- Hidden input for content (required by Trix) -->
-                <input id="content" type="hidden" name="content" value="{{ old('content', $article->content) }}" />
-                <!-- Trix Editor -->
-                @trix($article->content, 'content')
+                <input id="content" type="text" class="hidden" name="content" value="{{ $article->content }}" />
+                @trix(\App\Models\Article::class, 'content')
                 <x-form.error :messages="$errors->get('content')" />
             </div>
 
@@ -109,10 +119,12 @@
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const trixEditor = document.querySelector('trix-editor');
-                trixEditor.addEventListener('trix-change', function() {
-                    const content = trixEditor.editor.getDocument().toString();
-                    document.getElementById('content').value = content;
-                });
+                const hiddenInput = document.getElementById('content');
+                if (hiddenInput.value) {
+                    trixEditor.editor.loadHTML(hiddenInput.value);
+                }
+                const content = event.target.editor.getDocument().toString();
+                document.getElementById('content').value = content;
 
                 document.querySelector('form').addEventListener('submit', function(event) {
                     const content = document.getElementById('content').value;

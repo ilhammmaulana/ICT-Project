@@ -5,9 +5,9 @@
                 {{ __('Manage article') }}
             </h2>
             <div class="flex gap-3">
-                <x-button class="text-sm flex gap-2 align-middle" href="{{ route('admin.articles.create') }}">
+                <x-button class="text-sm flex gap-2 align-middle" href="{{ route('admin.article-categories.create') }}">
                     <x-icons.add></x-icons.add>
-                    <span>Create Article</span>
+                    <span>Create Category</span>
                 </x-button>
                 <label class="input input-bordered flex items-center gap-2">
                     <input type="text" class="grow" placeholder="Search" />
@@ -27,39 +27,33 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Image</th>
-                    <th>Title</th>
+                    <th>Name</th>
+                    <th>Slug</th>
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($articles as $article)
-                    <tr class="bg-white border-b dark:bg-gray-800">
-                        <th>{{ $loop->iteration + ($articles->currentPage() - 1) * $articles->perPage() }}</th>
-                        <th>
-                            <div class="w-24 h-24 overflow-hidden relative group">
-                                <img src="{{ url('/storage/' . $article->image) }}" alt="{{ $article->title }}">
-                            </div>
+                @foreach ($articleCategories as $category)
+                    <tr class="bg-white dark:bg-gray-800">
+                        <th>{{ $loop->iteration + ($articleCategories->currentPage() - 1) * $articleCategories->perPage() }}
                         </th>
-                        <td>{{ $article->title }}</td>
-                        <td>{{ $article->created_at ?? '-' }}</td>
-                        <td>{{ $article->updated_at ?? '-' }}</td>
+                        <td>{{ $category->name }}</td>
+                        <td>{{ $category->slug }}</td>
+                        <td>{{ $category->created_at ?? '-' }}</td>
+                        <td>{{ $category->updated_at ?? '-' }}</td>
                         <td class="flex gap-2 ">
-                            <x-button iconOnly="true" href="{{ route('articles.show', $article) }}">
-                                <x-icons.eye></x-icons.eye>
-                            </x-button>
                             <x-button variant="warning" iconOnly="true"
-                                href="{{ route('admin.articles.edit', $article) }}">
+                                href="{{ route('admin.article-categories.edit', $category) }}">
                                 <x-icons.edit></x-icons.edit>
                             </x-button>
-                            <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST"
-                                id="delete-form-{{ $article->id }}">
+                            <form action="{{ route('admin.article-categories.destroy', $category->id) }}" method="POST"
+                                id="delete-form-{{ $category->id }}">
                                 @csrf
                                 @method('DELETE')
                                 <x-button iconOnly="true" type="button" variant="danger"
-                                    onclick="confirmDelete({{ $article->id }})">
+                                    onclick="confirmDelete('{{ $category->id }}')">
                                     <x-icons.trash></x-icons.trash>
                                 </x-button>
                             </form>
@@ -71,25 +65,26 @@
 
         <div class="flex justify-center mt-5">
             <div class="join">
-                @if ($articles->onFirstPage())
+                @if ($articleCategories->onFirstPage())
                     <span
                         class="join-item btn btn-square tab-disabled dark:bg-dark-eval-0 bg-gray-300 hover:bg-gray-300">
                         <x-icons.chevron-left></x-icons.chevron-left>
                     </span>
                 @else
-                    <a class="join-item btn btn-square" href="{{ $articles->previousPageUrl() }}"
+                    <a class="join-item btn btn-square" href="{{ $articleCategories->previousPageUrl() }}"
                         aria-label="Previous">
                         <x-icons.chevron-left></x-icons.chevron-left>
                     </a>
                 @endif
-                @foreach ($articles->getUrlRange(1, $articles->lastPage()) as $page => $url)
-                    <a class="join-item btn btn-square {{ $page == $articles->currentPage() ? 'btn-primary' : '' }}"
+                @foreach ($articleCategories->getUrlRange(1, $articleCategories->lastPage()) as $page => $url)
+                    <a class="join-item btn btn-square {{ $page == $articleCategories->currentPage() ? 'btn-primary' : '' }}"
                         href="{{ $url }}" aria-label="Page {{ $page }}">
                         {{ $page }}
                     </a>
                 @endforeach
-                @if ($articles->hasMorePages())
-                    <a class="join-item btn btn-square" href="{{ $articles->nextPageUrl() }}" aria-label="Next">
+                @if ($articleCategories->hasMorePages())
+                    <a class="join-item btn btn-square" href="{{ $articleCategories->nextPageUrl() }}"
+                        aria-label="Next">
                         <x-icons.chevron-right></x-icons.chevron-right>
                     </a>
                 @else
@@ -104,8 +99,7 @@
     </div>
     <x-slot name="script">
         <script>
-            function confirmDelete(articleId) {
-                console.log('hello')
+            function confirmDelete(articleCategoryId) {
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -117,12 +111,13 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Submit the form if confirmed
-                        document.getElementById('delete-form-' + articleId).submit();
+                        document.getElementById('delete-form-' + articleCategoryId).submit();
 
                         Swal.fire(
                             'Deleted!',
-                            'Your article has been deleted.',
+                            'Your category has been deleted.',
                             'success'
+
                         );
                     }
                 });

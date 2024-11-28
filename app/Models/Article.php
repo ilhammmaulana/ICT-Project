@@ -20,4 +20,13 @@ class Article extends Model
     {
         return $this->belongsTo(ArticleCategory::class);
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function ($post) {
+            $post->trixRichText->each->delete();
+            $post->trixAttachments->each->purge();
+        });
+    }
 }

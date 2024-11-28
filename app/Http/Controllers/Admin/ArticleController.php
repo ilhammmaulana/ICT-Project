@@ -51,7 +51,6 @@ class ArticleController extends Controller
             'meta_description' => 'nullable|string|max:500',
             'image' => 'required|image|mimes:jpg,jpeg,png',
         ]);
-
         try {
             // Check if the slug already exists in the database
             $slug = Str::slug($validatedData['title']);
@@ -92,7 +91,10 @@ class ArticleController extends Controller
                 'meta_description' => $validatedData['meta_description'] ?? null,
                 'image' => $imagePath ?? null,  // Store image path if uploaded
                 'attachments' => $attachments ?? null,  // Store attachments if present
+                'post-trixFields' => request('post-trixFields'),
+                'attachment-post-trixFields' => request('attachment-post-trixFields')
             ]);
+
 
             // Return success message after creating the article
             return redirect()->route('admin.articles.index')
@@ -167,9 +169,8 @@ class ArticleController extends Controller
                 'meta_keyword' => $validatedData['meta_keyword'] ?? null,
                 'meta_description' => $validatedData['meta_description'] ?? null,
                 'image' => $imagePath ?? null,
-                'attachments' => $attachments ?? null,
             ]);
-            return redirect()->route('admin.courses.index')->with('success', 'Success update article!');
+            return redirect()->route('admin.articles.index')->with('success', 'Success update article!');
         } catch (\Throwable $th) {
             throw $th;
         }

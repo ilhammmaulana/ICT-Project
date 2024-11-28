@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="head">
         @trixassets
-        <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+        {{-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css"> --}}
     </x-slot>
 
     <x-slot name="header">
@@ -92,7 +92,7 @@
             <!-- Content (Trix Editor) -->
             <div class="form-group">
                 <x-form.label class="mb-2" for="content" :value="__('Content')" />
-                <input id="content" type="hidden" name="content" :value="old('content')" />
+                {{-- <input id="content" type="hidden" name="content" /> --}}
                 @trix(\App\Models\Article::class, 'content')
                 <x-form.error :messages="$errors->get('content')" />
             </div>

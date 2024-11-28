@@ -10,8 +10,8 @@ Route::prefix('/')->group(function () {
 
     Route::get('/', [HomeController::class, 'index']);
     Route::prefix('articles')->group(function () {
-        Route::get('/', [ArticleController::class, 'index']);
-        Route::get('/{id}', [ArticleController::class, 'show']);
+        Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
+        Route::get('/{id}', [ArticleController::class, 'show'])->name('articles.show');
     });
     Route::prefix('courses')->group(function () {
         Route::get('/', [GuestCourseController::class, 'index']);
