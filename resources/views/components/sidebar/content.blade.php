@@ -38,6 +38,7 @@
             </x-slot>
         </x-sidebar.link> --}}
     @endrole
+    
     @role(['user'])
     <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500 dark:text-white">
         Application
