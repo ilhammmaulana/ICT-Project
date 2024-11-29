@@ -31,10 +31,10 @@
 
     </div>
 
-    <div class="grid grid-cols-4 mt-5">
+    <div class="grid grid-cols-4 mt-5 gap-5">
         @foreach ($courses as $course)
             <a href="{{ route('user.courses.show', $course) }}">
-                <div class="rounded-lg shadow overflow-hidden">
+                <div class="rounded-lg shadow overflow-hidden bg-white">
                     <img src="{{ asset($course->image) }}" alt="{{ $course->name }}" class=" aspect-video object-cover">
 
                     <div class="p-2">
