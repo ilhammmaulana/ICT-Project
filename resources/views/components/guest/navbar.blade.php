@@ -16,7 +16,7 @@
                 <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Home
                 </a>
-                <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                <a href="{{ route('courses.index') }}" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Kursus
                 </a>
                 <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
@@ -31,40 +31,82 @@
             </div>
 
             <!-- Search & Auth Links -->
-            <div class="flex items-center space-x-4">
-                <!-- Search Bar -->
-                <div class="relative hidden md:block">
-                    <input type="text" placeholder="Cari Kursus..." class="w-64 px-4 py-2 input input-rounded">
-                    <button class="absolute right-3 top-2.5">
-                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </button>
+            @if (Auth::user())
+                <div class="flex items-center justify-end gap-3">
+                    {{-- <a href="{{ route('dashboard') }}" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                        Dashboard
+                    </a> --}}
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="flex items-center text-sm font-medium text-gray-500 rounded-md">
+                                <img src="{{ asset('images/icons/avatars/blank.svg') }}" class="size-12" />
+    
+                                <div class="ml-1">
+                                    <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+    
+                        <x-slot name="content">
+                            <!-- Profile -->
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+    
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+    
+                                <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault(); this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
                 </div>
+            @else
+                <div class="flex items-center space-x-4">
+                    <!-- Search Bar -->
+                    <div class="relative hidden md:block">
+                        <input type="text" placeholder="Cari Kursus..." class="w-64 px-4 py-2 input input-rounded">
+                        <button class="absolute right-3 top-2.5">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+                    </div>
 
-                <!-- Auth Links -->
-                <a href="{{ route('register') }}" class="text-gray-900 hover:text-gray-700 font-medium">
-                    Daftar
-                </a>
-                <a href="{{ route('login') }}" class="bg-blue-400 text-white px-4 py-2 rounded-lg  font-medium">
-                    Login
-                </a>
-                <!-- Hamburger Button -->
-                <div class="flex md:hidden">
-                    <button type="button" class="text-gray-500 hover:text-gray-700 focus:outline-none  focus:ring-0"
-                        x-on:click="isMenuOpen = !isMenuOpen" aria-label="Toggle navigation">
-                        <svg class="w-7 h-7 transition-transform duration-300 ease-in-out transform"
-                            :class="{ 'rotate-180': isMenuOpen }" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path x-show="!isMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16" />
-                            <path x-show="isMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+                    <!-- Auth Links -->
+                    <a href="{{ route('register') }}" class="text-gray-900 hover:text-gray-700 font-medium">
+                        Daftar
+                    </a>
+                    <a href="{{ route('login') }}" class="bg-blue-400 text-white px-4 py-2 rounded-lg  font-medium">
+                        Login
+                    </a>
+                    <!-- Hamburger Button -->
+                    <div class="flex md:hidden">
+                        <button type="button"
+                            class="text-gray-500 hover:text-gray-700 focus:outline-none  focus:ring-0"
+                            x-on:click="isMenuOpen = !isMenuOpen" aria-label="Toggle navigation">
+                            <svg class="w-7 h-7 transition-transform duration-300 ease-in-out transform"
+                                :class="{ 'rotate-180': isMenuOpen }" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path x-show="!isMenuOpen" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                <path x-show="isMenuOpen" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 
