@@ -14,8 +14,9 @@ Route::prefix('/')->group(function () {
         Route::get('/{slug}', [ArticleController::class, 'show'])->name('articles.show');
     });
     Route::prefix('courses')->group(function () {
-        Route::get('/', [GuestCourseController::class, 'index']);
-        Route::get('/{id}', [GuestCourseController::class, 'show']);
+        Route::get('/', [GuestCourseController::class, 'index'])->name('courses.index');
+        Route::get('/{slug}', [GuestCourseController::class, 'show'])->name('courses.show');
+        Route::post('{id}/join', [GuestCourseController::class, 'join'])->name('courses.join');
     });
     Route::prefix('abouts')->group(function () {
         Route::get('/', [GuestCourseController::class, 'index']);

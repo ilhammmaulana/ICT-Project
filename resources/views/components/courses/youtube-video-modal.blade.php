@@ -1,30 +1,30 @@
-<div class="rounded-lg mb-5 w-full">
-    @php
-        $youtubeEmbedUrl = null;
-        $youtubeThumbnailUrl = null;
+@php
+    $youtubeEmbedUrl = null;
+    $youtubeThumbnailUrl = null;
 
-        // Check if the link is a YouTube URL and extract the video ID
-        if (str_contains($content->content, 'youtube.com') || str_contains($content->content, 'youtu.be')) {
-            $urlParts = parse_url($content->content);
+    // Check if the link is a YouTube URL and extract the video ID
+    if (str_contains($content->content, 'youtube.com') || str_contains($content->content, 'youtu.be')) {
+        $urlParts = parse_url($content->content);
 
-            if (isset($urlParts['host']) && str_contains($urlParts['host'], 'youtu.be')) {
-                // Shortened YouTube link (e.g., https://youtu.be/VIDEO_ID)
-                $videoId = ltrim($urlParts['path'], '/');
-            } elseif (isset($urlParts['query'])) {
-                // Standard YouTube link (e.g., https://www.youtube.com/watch?v=VIDEO_ID)
-                parse_str($urlParts['query'], $queryParts);
-                $videoId = $queryParts['v'] ?? null;
-            }
-
-            // Construct the thumbnail and embed URLs if we have a video ID
-            if (isset($videoId)) {
-                $youtubeEmbedUrl = 'https://www.youtube.com/embed/' . $videoId;
-                $youtubeThumbnailUrl = 'https://img.youtube.com/vi/' . $videoId . '/0.jpg';
-            }
+        if (isset($urlParts['host']) && str_contains($urlParts['host'], 'youtu.be')) {
+            // Shortened YouTube link (e.g., https://youtu.be/VIDEO_ID)
+            $videoId = ltrim($urlParts['path'], '/');
+        } elseif (isset($urlParts['query'])) {
+            // Standard YouTube link (e.g., https://www.youtube.com/watch?v=VIDEO_ID)
+            parse_str($urlParts['query'], $queryParts);
+            $videoId = $queryParts['v'] ?? null;
         }
-    @endphp
 
-    @if ($youtubeThumbnailUrl)
+        // Construct the thumbnail and embed URLs if we have a video ID
+        if (isset($videoId)) {
+            $youtubeEmbedUrl = 'https://www.youtube.com/embed/' . $videoId;
+            $youtubeThumbnailUrl = 'https://img.youtube.com/vi/' . $videoId . '/0.jpg';
+        }
+    }
+@endphp
+
+@if ($youtubeThumbnailUrl)
+    <div class="rounded-lg mb-5 w-full">
         <div class="relative w-full">
             <div class="w-full flex justify-center">
                 <img src="{{ $youtubeThumbnailUrl }}" alt="YouTube Thumbnail" class="block rounded-lg w-3/5">
@@ -87,5 +87,5 @@
                 </div>
             </dialog>
         </div>
-    @endif
-</div>
+    </div>
+@endif

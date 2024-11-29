@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\CourseUser;
@@ -16,7 +15,6 @@ class CourseController extends Controller
      */
     public function index(Request $request)
     {
-
         $search = $request->input('search', '');
         $course_category = $request->input('categoryId', '');
         $courses = Course::query();
@@ -32,7 +30,7 @@ class CourseController extends Controller
         $courses = $courses->with('courseCategory')->get();
         $course_categories = CourseCategory::all();
 
-        return view('pages.guest.courses.index', [
+        return view('pages.user.courses.index', [
             'courses' => $courses,
             'course_categories' => $course_categories,
         ]);
@@ -57,45 +55,26 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $slug)
+    public function show(Course $course)
     {
-        try {
-            $course = Course::where('slug', $slug)->firstOrFail();
-            $user = auth()->user();
-            $is_user_joined = $user ? CourseUser::where('course_id', $course->id)->where('user_id', $user->id)->exists() : false;
+        $searchModule = request()->input('searchModule', '');
+        $course = Course::with([
+            'modules' => function ($query) use ($searchModule) {
+                $query->where('title', 'like', '%' . $searchModule . '%');
+            }
+        ])->where('id', $course->id)->first();
 
-            return view('pages.guest.courses.show', [
-                'course' => $course,
-                'is_user_joined' => $is_user_joined
-            ]);
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
-    }
-
-    public function join(string $id)
-    {
-
-        $user = auth()->user();
-
-        if (!$user) {
-            return redirect()->route('login');
-        }
-
-        $course = Course::where('id', $id)->firstOrFail();
-        CourseUser::create([
-            'course_id' => $id,
-            'user_id' => $user->id
+        return view('pages.user.courses.show', [
+            'course' => $course,
+            'course_categories' => CourseCategory::all(),
         ]);
-
-        Log::info("JOIN");
-        return redirect()->route('user.courses.show', $course)->with('success', 'Successfully joined the course');
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(CourseUser $courseUser)
     {
         //
     }
@@ -103,7 +82,7 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, CourseUser $courseUser)
     {
         //
     }
@@ -111,7 +90,7 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(CourseUser $courseUser)
     {
         //
     }

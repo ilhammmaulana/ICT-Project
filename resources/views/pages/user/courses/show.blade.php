@@ -1,11 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        {{-- <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <h2 class="text-xl font-semibold leading-tight">
                 {{ __(' Course Detail') }}
             </h2>
 
-        </div>
+        </div> --}}
     </x-slot>
 
     <div class="w-[85%] mx-auto mt-5">
@@ -13,7 +13,7 @@
             style="background-image: url({{ asset($course->image ? $course->image : 'images/course-placeholder.jpg') }});">
 
             <div class="absolute top-0 right-0 p-4">
-                <x-courses.edit-course-modal :course="$course" />
+                {{-- <x-courses.edit-course-modal :course="$course" /> --}}
             </div>
             <div class="absolute bottom-4 left-4 p-4 bg-white rounded-md">
                 <p class="text-lg font-semibold">
@@ -30,7 +30,7 @@
                 <h2 class="text-xl font-semibold">Course Modules</h2>
                 <div class="flex justify-between mt-12">
 
-                    <form action="{{ route('admin.courses.edit', $course) }}" method="GET" id="search_form">
+                    <form action="{{ route('user.courses.show', $course) }}" method="GET" id="search_form">
                         <label class="input input-bordered flex items-center gap-2" for="searchModule">
                             <input type="text" class="grow input  focus:border-none active:border-none"
                                 placeholder="Search" name="searchModule" id="module-search-input"
@@ -43,7 +43,6 @@
                             </svg>
                         </label>
                     </form>
-                    <x-course-modules.create-course-module-modal :courseId="$course->id" />
                 </div>
                 <div id="module_container" class="mt-5">
                     @foreach ($course->modules as $module)
@@ -51,19 +50,49 @@
                             <div class="flex justify-between items-center">
                                 <p class="text-xl text-slate-900 font-medium">{{ $module->title }}</p>
                                 <div class="d-flex gap-3 align-items-center">
-                                    <x-course-modules.edit-course-module-modal :courseId="$course->id" :module="$module"
-                                        :contents="$module->moduleContents" />
-                                    <x-modal.delete-modal :id="$module->id" :action="route('admin.course-modules.destroy', $course)" />
+                                    @php
+                                        $date = \Carbon\Carbon::parse($module->created_at)->format('d M Y');
+                                    @endphp
+                                    <p class="text-xs text-end mb-4">{{ $date }}</p>
                                 </div>
 
 
                             </div>
                             <p class="text-sm mt-3">{{ $module->description }}</p>
-                            @php
-                                $date = \Carbon\Carbon::parse($module->created_at)->format('d M Y');
-                            @endphp
-                            <p class="text-xs text-end mb-4">{{ $date }}</p>
+
                             <div class="mt-5">
+                                {{-- <div class="grid grid-cols-1 place-items-center">
+                                    @foreach ($module->moduleContents as $content)
+                                        @if ($content->content_type === 'LINK' && $content->content)
+                                            <x-courses.youtube-video-modal :id="$module->id" :url="$content->content"
+                                                :content="$content" />
+                                        @endif
+                                    @endforeach
+                                </div>
+
+                                <div>
+                                    @foreach ($module->moduleContents as $content)
+                                        @if ($content->content_type === 'LINK' && $content->content)
+                                            @php
+                                                $isYouTubeLink = false;
+                                                if (
+                                                    str_contains($content->content, 'youtube.com') ||
+                                                    str_contains($content->content, 'youtu.be')
+                                                ) {
+                                                    $isYouTubeLink = true;
+                                                }
+                                            @endphp
+
+                                            @if (!$isYouTubeLink)
+                                                <a href="{{ $content->content }}"
+                                                    class="rounded-lg mb-2 w-full block bg-blue-200 px-2 py-1.5 underline"
+                                                    target="_blank"
+                                                    referrerpolicy="no-referrer">{{ $content->content }}</a>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                </div> --}}
+
                                 @foreach ($module->moduleContents as $content)
                                     @if ($content->content_type === 'LINK' && $content->content)
                                         <x-courses.youtube-video-modal :id="$module->id" :url="$content->content"
@@ -97,9 +126,6 @@
                         </div>
                     @endforeach
                 </div>
-
-
-
             </div>
         </div>
 

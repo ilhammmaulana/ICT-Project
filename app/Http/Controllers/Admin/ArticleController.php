@@ -7,6 +7,8 @@ use App\Models\Article;
 use App\Models\ArticleCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\MockObject\Generator\DuplicateMethodException;
@@ -91,15 +93,17 @@ class ArticleController extends Controller
                 'meta_description' => $validatedData['meta_description'] ?? null,
                 'image' => $imagePath ?? null,  // Store image path if uploaded
                 'attachments' => $attachments ?? null,  // Store attachments if present
-                'post-trixFields' => request('post-trixFields'),
-                'attachment-post-trixFields' => request('attachment-post-trixFields')
+                'article-trixFields' => request('article-trixFields'),
+                'attachment-article-trixFields' => request('attachment-article-trixFields')
             ]);
+
 
 
             // Return success message after creating the article
             return redirect()->route('admin.articles.index')
                 ->with('success', 'Article created successfully.');
         } catch (\Exception $e) {
+            // Log::info($e);
             // Handle any errors that may occur
             return back()->withErrors(['error' => 'There was an error saving the article: ' . $e->getMessage()]);
         }
@@ -170,6 +174,7 @@ class ArticleController extends Controller
                 'meta_description' => $validatedData['meta_description'] ?? null,
                 'image' => $imagePath ?? null,
                 ]);
+
             return redirect()->route('admin.articles.index')->with('success', 'Success update article!');
         } catch (\Throwable $th) {
             throw $th;

@@ -53,7 +53,8 @@ class CourseController extends Controller
                 'course_category_id' => 'required|exists:course_categories,id',
             ]);
 
-            $slug = Str::slug($validate['name']);
+            $slug = Str::slug($validate['title'] ?? $validate['name']);
+
 
             $same_slug_count = Course::where('slug', $slug)->count();
 
@@ -138,7 +139,6 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         try {
-            Log::info($request->all());
             $validate = $request->validate([
                 'name' => 'required|string',
                 'meta_title' => 'required|string',
@@ -150,8 +150,7 @@ class CourseController extends Controller
             ]);
 
 
-
-            $slug = Str::slug($validate['name']);
+            $slug = Str::slug($validate['title'] ?? $validate['name']);
 
             $same_slug_count = Course::where('slug', $slug)->count();
 
@@ -165,17 +164,11 @@ class CourseController extends Controller
                 $imagePath = str_replace('/storage', 'storage', Storage::url($path));
                 $validate['image'] = $imagePath;
 
-
-                // delete olg image
                 if ($course->image) {
                     Storage::delete($course->image);
                 }
             }
 
-            Log::info($validate);
-
-
-            Log::info($course);
             Course::where('id', $course->id)->update([
                 'name' => $validate['name'],
                 'slug' => $slug,
@@ -183,12 +176,11 @@ class CourseController extends Controller
                 'meta_description' => $validate['meta_description'],
                 'title' => $validate['title'],
                 'description' => $validate['description'],
-                'image' => isset($validate['image']) ? $validate['image'] : null,
+                'image' => isset($validate['image']) ? $validate['image'] : $course->image,
                 'course_category_id' => $validate['course_category_id'],
                 'created_by' => auth()->user()->id
             ]);
 
-            // return redirect()->route('admin.courses.index');
             return redirect()->route('admin.courses.show', ['course' => $course]);
 
         } catch (\Throwable $th) {
