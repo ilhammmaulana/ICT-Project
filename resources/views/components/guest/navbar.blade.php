@@ -13,7 +13,7 @@
 
             <!-- Full Menu (Desktop) -->
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                <a href="{{ route('home.index') }}" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Home
                 </a>
                 <a href="{{ route('courses.index') }}" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
