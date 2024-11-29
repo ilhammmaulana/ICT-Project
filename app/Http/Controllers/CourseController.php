@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CourseCategory;
 use App\Models\CourseUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +15,6 @@ class CourseController extends Controller
      */
     public function index(Request $request)
     {
-        Log::info("ODIFUDOIF");
         $search = $request->input('search', '');
         $courses = Course::with('courseCategory')->where('name', 'like', '%' . $search . '%')->get();
         return view('pages.user.courses.index', [
@@ -41,10 +41,21 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CourseUser $courseUser)
+    public function show(Course $course)
     {
-        //
+        $searchModule = request()->input('searchModule', '');
+        $course = Course::with([
+            'modules' => function ($query) use ($searchModule) {
+                $query->where('title', 'like', '%' . $searchModule . '%');
+            }
+        ])->where('id', $course->id)->first();
+
+        return view('pages.user.courses.show', [
+            'course' => $course,
+            'course_categories' => CourseCategory::all(),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
