@@ -2,10 +2,12 @@
 @import "tailwindcss/components";
 @import "perfect-scrollbar/css/perfect-scrollbar.css";
 @import "tailwindcss/utilities";
-
-*{
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+* {
     /* border: 1px solid greens; */
+    font-family: "Plus Jakarta Sans", serif;
 }
+
 .dark .ps__rail-y,
 .dark .ps__rail-x {
     background-color: transparent !important;
