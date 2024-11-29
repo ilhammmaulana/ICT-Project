@@ -61,7 +61,7 @@
                             <p class="text-sm mt-3">{{ $module->description }}</p>
 
                             <div class="mt-5">
-                                <div class="grid grid-cols-1 place-items-center">
+                                {{-- <div class="grid grid-cols-1 place-items-center">
                                     @foreach ($module->moduleContents as $content)
                                         @if ($content->content_type === 'LINK' && $content->content)
                                             <x-courses.youtube-video-modal :id="$module->id" :url="$content->content"
@@ -91,7 +91,36 @@
                                             @endif
                                         @endif
                                     @endforeach
-                                </div>
+                                </div> --}}
+
+                                @foreach ($module->moduleContents as $content)
+                                    @if ($content->content_type === 'LINK' && $content->content)
+                                        <x-courses.youtube-video-modal :id="$module->id" :url="$content->content"
+                                            :content="$content" />
+                                    @endif
+                                @endforeach
+
+                                @foreach ($module->moduleContents as $content)
+                                    @if ($content->content_type === 'LINK' && $content->content)
+                                        @php
+                                            $isYouTubeLink = false;
+                                            if (
+                                                str_contains($content->content, 'youtube.com') ||
+                                                str_contains($content->content, 'youtu.be')
+                                            ) {
+                                                $isYouTubeLink = true;
+                                            }
+                                        @endphp
+
+                                        @if (!$isYouTubeLink)
+                                            <div class="p-3 shadow-sm border rounded-md mb-2">
+                                                <a href="{{ $content->content }}" target="_blank"
+                                                    class="underline w-full"
+                                                    referrerpolicy="no-referrer">{{ $content->content }}</a>
+                                            </div>
+                                        @endif
+                                    @endif
+                                @endforeach
                             </div>
 
                         </div>

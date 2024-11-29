@@ -64,37 +64,34 @@
                             @endphp
                             <p class="text-xs text-end mb-4">{{ $date }}</p>
                             <div class="mt-5">
-                                <div class="grid grid-cols-1 place-items-center">
-                                    @foreach ($module->moduleContents as $content)
-                                        @if ($content->content_type === 'LINK' && $content->content)
-                                            <x-courses.youtube-video-modal :id="$module->id" :url="$content->content"
-                                                :content="$content" />
-                                        @endif
-                                    @endforeach
-                                </div>
+                                @foreach ($module->moduleContents as $content)
+                                    @if ($content->content_type === 'LINK' && $content->content)
+                                        <x-courses.youtube-video-modal :id="$module->id" :url="$content->content"
+                                            :content="$content" />
+                                    @endif
+                                @endforeach
 
-                                <div>
-                                    @foreach ($module->moduleContents as $content)
-                                        @if ($content->content_type === 'LINK' && $content->content)
-                                            @php
-                                                $isYouTubeLink = false;
-                                                if (
-                                                    str_contains($content->content, 'youtube.com') ||
-                                                    str_contains($content->content, 'youtu.be')
-                                                ) {
-                                                    $isYouTubeLink = true;
-                                                }
-                                            @endphp
+                                @foreach ($module->moduleContents as $content)
+                                    @if ($content->content_type === 'LINK' && $content->content)
+                                        @php
+                                            $isYouTubeLink = false;
+                                            if (
+                                                str_contains($content->content, 'youtube.com') ||
+                                                str_contains($content->content, 'youtu.be')
+                                            ) {
+                                                $isYouTubeLink = true;
+                                            }
+                                        @endphp
 
-                                            @if (!$isYouTubeLink)
-                                                <a href="{{ $content->content }}"
-                                                    class="rounded-lg mb-2 w-full block bg-blue-200 px-2 py-1.5 underline"
-                                                    target="_blank"
+                                        @if (!$isYouTubeLink)
+                                            <div class="p-3 shadow-sm border rounded-md mb-2">
+                                                <a href="{{ $content->content }}" target="_blank"
+                                                    class="underline w-full"
                                                     referrerpolicy="no-referrer">{{ $content->content }}</a>
-                                            @endif
+                                            </div>
                                         @endif
-                                    @endforeach
-                                </div>
+                                    @endif
+                                @endforeach
                             </div>
 
                         </div>
