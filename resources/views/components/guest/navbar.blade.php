@@ -19,7 +19,8 @@
                 <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Kursus
                 </a>
-                <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                <a href="{{ route('articles.index') }}"
+                    class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Artikel
                 </a>
                 <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">

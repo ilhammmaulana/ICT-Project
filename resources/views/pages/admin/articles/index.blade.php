@@ -47,7 +47,7 @@
                         <td>{{ $article->created_at ?? '-' }}</td>
                         <td>{{ $article->updated_at ?? '-' }}</td>
                         <td class="flex gap-2 ">
-                            <x-button iconOnly="true" href="{{ route('articles.show', $article) }}">
+                            <x-button iconOnly="true" href="{{ route('articles.show', $article->slug) }}">
                                 <x-icons.eye></x-icons.eye>
                             </x-button>
                             <x-button variant="warning" iconOnly="true"

@@ -12,7 +12,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.guest.articles.index');
     }
 
     /**

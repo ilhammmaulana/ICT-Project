@@ -13,12 +13,12 @@ class Article extends Model
     protected $fillable = ['id', 'content', 'created_by', 'title', 'slug', 'meta_description', 'article_category_id', 'meta_title', 'body', 'image', 'meta_author', 'meta_keyword'];
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function categoryArticle()
     {
-        return $this->belongsTo(ArticleCategory::class);
+        return $this->belongsTo(ArticleCategory::class, 'article_category_id');
     }
     protected static function boot()
     {
