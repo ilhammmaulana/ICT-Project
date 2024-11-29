@@ -4,7 +4,17 @@
     </x-slot>
 
     <div class="flex justify-between">
-        <form action="{{ route('user.articles.index') }}" method="GET">
+        <form action="{{ route('user.articles.index') }}" method="GET" class="flex items-center gap-3"
+            id="article_search_form">
+            <label for="categoryId" class="hidden">
+            </label>
+            <select class="select select-primary w-full max-w-xs" id="category_search_input" name="categoryId">
+                <option selected value="">Choose article category</option>
+                @foreach ($article_categories as $article_category)
+                    <option value="{{ $article_category->id }}" @if (request('categoryId') == $article_category->id) selected @endif>
+                        {{ $article_category->name }}</option>
+                @endforeach
+            </select>
             <label class="input input-bordered input-info flex items-center gap-2" for="search">
                 <input type="text" class="grow input  focus:border-none active:border-none" placeholder="Search"
                     name="search" value="{{ request('search') }}" />
@@ -40,3 +50,19 @@
 
 
 </x-app-layout>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.getElementById('article_search_form');
+
+        console.log(searchForm);
+        const categorySearchInput = document.getElementById('category_search_input');
+        console.log(categorySearchInput);
+        if (categorySearchInput) {
+            categorySearchInput.addEventListener('change', function() {
+                if (searchForm) {
+                    searchForm.submit();
+                }
+            })
+        }
+    })
+</script>

@@ -8,9 +8,19 @@
         </div>
     </x-slot>
 
-    <div class="flex justify-between">
-        <form action="{{ route('user.courses.index') }}" method="GET">
-            <label class="input input-bordered input-info flex items-center gap-2" for="search">
+    <div>
+        <form action="{{ route('user.courses.index') }}" method="GET" class="flex items-center gap-3"
+            id="course_search_form">
+            <label for="categoryId" class="hidden">
+            </label>
+            <select class="select select-primary w-full max-w-xs" id="category_search_input" name="categoryId">
+                <option selected value="">Choose course category</option>
+                @foreach ($course_categories as $course_category)
+                    <option value="{{ $course_category->id }}" @if (request('categoryId') == $course_category->id) selected @endif>
+                        {{ $course_category->name }}</option>
+                @endforeach
+            </select>
+            <label class="input input-bordered input-info flex items-center gap-2 w-full max-w-sm" for="search">
                 <input type="text" class="grow input  focus:border-none active:border-none" placeholder="Search"
                     name="search" value="{{ request('search') }}" />
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
@@ -21,14 +31,6 @@
                 </svg>
             </label>
         </form>
-        {{-- <input type="text" placeholder="Type here" class="input input-bordered input-primary w-full max-w-sm" /> --}}
-
-        {{-- <x-courses.create-course-modal :courses="$course_categories" /> --}}
-        {{-- <x-courses.create-course-modal /> --}}
-        {{-- <a href="{{ route('user.courses.create') }}">
-            <button class="btn btn-primary btn-active text-white">Add Course</button>
-        </a> --}}
-
     </div>
 
     <div class="grid grid-cols-4 mt-5 gap-5">
@@ -60,3 +62,20 @@
 
 
 </x-app-layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.getElementById('course_search_form');
+
+        console.log(searchForm);
+        const categorySearchInput = document.getElementById('category_search_input');
+        console.log(categorySearchInput);
+        if (categorySearchInput) {
+            categorySearchInput.addEventListener('change', function() {
+                if (searchForm) {
+                    searchForm.submit();
+                }
+            })
+        }
+    })
+</script>

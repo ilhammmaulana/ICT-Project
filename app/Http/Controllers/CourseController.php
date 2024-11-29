@@ -16,9 +16,23 @@ class CourseController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search', '');
-        $courses = Course::with('courseCategory')->where('name', 'like', '%' . $search . '%')->get();
+        $course_category = $request->input('categoryId', '');
+        $courses = Course::query();
+
+        if ($search) {
+            $courses = $courses->where('name', 'like', '%' . $search . '%');
+        }
+
+        if ($course_category) {
+            $courses = $courses->where('course_category_id', $course_category);
+        }
+
+        $courses = $courses->with('courseCategory')->get();
+        $course_categories = CourseCategory::all();
+
         return view('pages.user.courses.index', [
             'courses' => $courses,
+            'course_categories' => $course_categories,
         ]);
     }
 

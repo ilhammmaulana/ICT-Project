@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\ArticleCategory;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -12,10 +13,25 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
-        
+        $search = request()->input('search', '');
+        $categoryId = request()->input('categoryId', '');
+
+        $article_categories = ArticleCategory::all();
+        $articles = Article::query();
+
+        if ($search) {
+            $articles = $articles->where('title', 'like', '%' . $search . '%');
+        }
+
+        if ($categoryId) {
+            $articles = $articles->where('article_category_id', $categoryId);
+        }
+
+        $articles = $articles->get();
+
         return view('pages.user.articles.index', [
-            'articles' => $articles
+            'articles' => $articles,
+            'article_categories' => $article_categories
         ]);
     }
 
