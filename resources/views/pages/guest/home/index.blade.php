@@ -152,9 +152,11 @@
                     </p>
                 </div>
                 <div class="mt-4 md:mt-0 text-end content-center">
-                    <button
-                        class="bg-white hover:bg-gray-100 text-gray-700 font-light py-2 px-4 border border-gray-200 hover:border-transparent rounded">Lihat
-                        Semua</button>
+                    <a href="{{ route('courses.index') }}">
+                        <button
+                            class="bg-white hover:bg-gray-100 text-gray-700 font-light py-2 px-4 border border-gray-200 hover:border-transparent rounded">Lihat
+                            Semua</button>
+                    </a>
                 </div>
             </div>
             <!-- Course Grid -->
