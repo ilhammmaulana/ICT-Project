@@ -23,7 +23,7 @@
         <form action="{{ route('courses.index') }}" method="GET" class="flex items-center gap-3" id="course_search_form">
             <label for="categoryId" class="hidden">
             </label>
-            <select class="select select-primary w-full max-w-xs select-md" id="category_search_input"
+            <select class="select select-primary w-full max-w-xs select-md text-sm" id="category_search_input"
                 name="categoryId">
                 <option selected value="">Choose course category</option>
                 @foreach ($course_categories as $course_category)
@@ -33,8 +33,8 @@
             </select>
             <label class="input input-bordered input-info flex items-center gap-2 w-full max-w-sm input-md"
                 for="search">
-                <input type="text" class="grow input  focus:border-none active:border-none" placeholder="Search"
-                    name="search" value="{{ request('search') }}" />
+                <input type="text" class="grow input  focus:border-none active:border-none text-sm"
+                    placeholder="Search" name="search" value="{{ request('search') }}" />
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                     class="h-4 w-4 opacity-70">
                     <path fill-rule="evenodd"
