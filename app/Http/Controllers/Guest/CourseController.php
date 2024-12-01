@@ -75,11 +75,10 @@ class CourseController extends Controller
 
     public function join(string $id)
     {
-
         $user = auth()->user();
 
         if (!$user) {
-            return redirect()->route('login');
+            return redirect()->guest(route('login'));
         }
 
         $course = Course::where('id', $id)->firstOrFail();
@@ -87,8 +86,6 @@ class CourseController extends Controller
             'course_id' => $id,
             'user_id' => $user->id
         ]);
-
-        Log::info("JOIN");
         return redirect()->route('user.courses.show', $course)->with('success', 'Successfully joined the course');
     }
 
