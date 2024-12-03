@@ -74,7 +74,7 @@
 
                             <div
                                 class="p-3 shadow-sm border rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white">
-                                <p>You need to join this course to see the contents</p>
+                                <p class="text-sm">You need to join this course to see the contents</p>
                             </div>
                         </div>
                     @endif

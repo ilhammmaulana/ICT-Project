@@ -15,7 +15,7 @@
                     class="inline-block mt-8 bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-lg">
                     Belajar Sekarang
                 </a>
-                <div class="mt-4 w-full pl-8">
+                <div class="mt-10 w-full pl-8">
                     <img src="https://miro.medium.com/v2/resize:fit:1400/0*5-suKbBoiROrI6hh" alt="Hero Image"
                         class="rounded-lg shadow-lg">
                 </div>
@@ -24,7 +24,7 @@
     </section>
 
     <!-- Section Collaborate -->
-    <section class="py-16">
+    {{-- <section class="py-16">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-2xl text-gray-600 mb-8 text-center">Telah dipercaya oleh</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Section Keuntungan -->
     <section class="py-16">
@@ -152,13 +152,15 @@
                     </p>
                 </div>
                 <div class="mt-4 md:mt-0 text-end content-center">
-                    <button
-                        class="bg-white hover:bg-gray-100 text-gray-700 font-light py-2 px-4 border border-gray-200 hover:border-transparent rounded">Lihat
-                        Semua</button>
+                    <a href="{{ route('courses.index') }}">
+                        <button
+                            class="bg-white hover:bg-gray-100 text-gray-700 font-light py-2 px-4 border border-gray-200 hover:border-transparent rounded">Lihat
+                            Semua</button>
+                    </a>
                 </div>
             </div>
             <!-- Course Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {{-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- UI/UX Design Card -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-lg">
                     <div class="relative h-64 p-4">
@@ -226,6 +228,23 @@
                             Sekarang</button>
                     </div>
                 </div>
+            </div> --}}
+            <div class="grid grid-cols-3 gap-4 lg:grid-cols-3 xl:grid-cols-3 mt-6">
+                @foreach ($courses as $course)
+                    <div class="bg-white rounded-lg overflow-hidden p-3">
+                        <img src="{{ asset($course->image) }}" alt="{{ $course->name }}"
+                            class="rounded-md aspect-square object-cover">
+                        <div class="p-2">
+                            <h2 class="text-base font-semibold">{{ $course->title }}</h2>
+                            <p class=" text-muted-foreground line-clamp-4 text-gray-600 text-xs mt-2">
+                                {{ $course->description }}
+                            </p>
+                            <a href="{{ route('courses.show', $course->slug) }}" title="{{ $course->name }}">
+                                <button class="btn w-full btn-sm mt-2 text-xs">Mulai Sekarang</button>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -250,7 +269,7 @@
                     <div class="flex flex-col items-center text-center">
                         <img src="https://www.perfocal.com/blog/content/images/size/w960/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg"
                             alt="Profile Picture" class="w-20 h-20 rounded-full mb-4 object-cover">
-                        <h3 class="text-lg font-medium text-gray-800">Megawati</h3>
+                        <h3 class="text-lg font-medium text-gray-800">Asep Ban Dalam</h3>
                     </div>
                     <p class="text-gray-600 mt-4">Kursus desain web memberikan dasar yang kuat bagi saya.
                         Instruktur
@@ -267,7 +286,7 @@
                     <div class="flex flex-col items-center text-center">
                         <img src="https://www.perfocal.com/blog/content/images/size/w960/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg"
                             alt="Profile Picture" class="w-20 h-20 rounded-full mb-4 object-cover">
-                        <h3 class="text-lg font-medium text-gray-800">Jokowi</h3>
+                        <h3 class="text-lg font-medium text-gray-800">Ahmad Kopling</h3>
                     </div>
                     <p class="text-gray-600 mt-4">Kursus desain UI/UX melebihi harapan saya. Keahlian instruktur
                         dan

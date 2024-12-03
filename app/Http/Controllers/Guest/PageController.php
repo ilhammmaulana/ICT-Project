@@ -3,16 +3,39 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class HomeController extends Controller
+class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function home()
     {
-        return view('pages.guest.home.index');
+        // SORT COURSES BY POPULARITY
+        $courses = DB::table('courses')
+            ->select('courses.*', DB::raw('COUNT(course_users.id) as users_count'))
+            ->leftJoin('course_users', 'courses.id', '=', 'course_users.course_id')
+            ->groupBy('courses.id')
+            ->orderBy('users_count', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('pages.guest.home.index', [
+            'courses' => $courses
+        ]);
+    }
+
+    public function about()
+    {
+        return view('pages.guest.about.index');
+    }
+
+    public function contact()
+    {
+        return view('pages.guest.contact.index');
     }
 
     /**
