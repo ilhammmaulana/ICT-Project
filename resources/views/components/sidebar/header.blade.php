@@ -1,11 +1,20 @@
 <div class="flex items-center justify-between flex-shrink-0 px-3">
     <!-- Logo -->
-    <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2">
-        <x-application-logo aria-hidden="true" class="sm:w-24 md:w-36 absolute  h-auto" />
+    @role(['admin'])
+        <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2">
+            <x-application-logo aria-hidden="true" class="sm:w-24 md:w-36 absolute  h-auto" />
 
-        <span class="sr-only">Dashboard</span>
-    </a>
+            <span class="sr-only">Dashboard</span>
+        </a>
+    @endrole
 
+    @role(['user'])
+        <a href="{{ route('home.index') }}" class="inline-flex items-center gap-2">
+            <x-application-logo aria-hidden="true" class="sm:w-24 md:w-36 absolute  h-auto" />
+
+            <span class="sr-only">Dashboard</span>
+        </a>
+    @endrole
     <!-- Toggle button -->
     <x-button type="button" icon-only sr-text="Toggle sidebar" variant="secondary"
         x-show="isSidebarOpen || isSidebarHovered" x-on:click="isSidebarOpen = !isSidebarOpen">

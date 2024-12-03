@@ -24,10 +24,12 @@
                 <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Artikel
                 </a>
-                <a href="{{ route('about.index') }}" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                <a href="{{ route('about.index') }}"
+                    class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Tentang Kami
                 </a>
-                <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                <a href="{{ route('contact.index') }}"
+                    class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Kontak
                 </a>
             </div>
@@ -35,9 +37,20 @@
             <!-- Search & Auth Links -->
             @if (Auth::user())
                 <div class="flex items-center justify-end gap-3">
-                    {{-- <a href="{{ route('dashboard') }}" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
-                        Dashboard
-                    </a> --}}
+                    @role(['admin'])
+                        <a href="{{ route('admin.courses.index') }}"
+                            class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                            Dashboard
+                        </a>
+                    @endrole
+
+                    @role(['user'])
+                        <a href="{{ route('user.courses.index') }}"
+                            class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                            Dashboard
+                        </a>
+                    @endrole
+
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="flex items-center text-sm font-medium text-gray-500 rounded-md">
@@ -86,10 +99,12 @@
                     </div>
 
                     <!-- Auth Links -->
-                    <a href="{{ route('register') }}" class="text-gray-900 hover:text-gray-700 font-medium max-lg:text-xs">
+                    <a href="{{ route('register') }}"
+                        class="text-gray-900 hover:text-gray-700 font-medium max-lg:text-xs">
                         Daftar
                     </a>
-                    <a href="{{ route('login') }}" class="bg-blue-400 text-white px-4 py-2 rounded-lg  font-medium max-lg:text-xs">
+                    <a href="{{ route('login') }}"
+                        class="bg-blue-400 text-white px-4 py-2 rounded-lg  font-medium max-lg:text-xs">
                         Login
                     </a>
                     <!-- Hamburger Button -->

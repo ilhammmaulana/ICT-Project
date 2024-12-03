@@ -10,6 +10,7 @@ Route::prefix('/')->group(function () {
 
     Route::get('/', [PageController::class, 'home'])->name('home.index');
     Route::get('/about', [PageController::class, 'about'])->name('about.index');
+    Route::get('/contact', [PageController::class, 'contact'])->name('contact.index');
 
     Route::prefix('articles')->group(function () {
         Route::get('/', [ArticleController::class, 'index'])->name('articles.index');

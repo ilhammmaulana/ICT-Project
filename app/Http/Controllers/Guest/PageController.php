@@ -33,6 +33,11 @@ class PageController extends Controller
         return view('pages.guest.about.index');
     }
 
+    public function contact()
+    {
+        return view('pages.guest.contact.index');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
