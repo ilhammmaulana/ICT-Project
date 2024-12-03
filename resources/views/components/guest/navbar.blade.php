@@ -12,17 +12,19 @@
             </div>
 
             <!-- Full Menu (Desktop) -->
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="{{ route('home.index') }}" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="{{ route('home.index') }}"
+                    class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Home
                 </a>
-                <a href="{{ route('courses.index') }}" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                <a href="{{ route('courses.index') }}"
+                    class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Kursus
                 </a>
                 <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Artikel
                 </a>
-                <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                <a href="{{ route('about.index') }}" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Tentang Kami
                 </a>
                 <a href="#" class="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
@@ -40,7 +42,7 @@
                         <x-slot name="trigger">
                             <button class="flex items-center text-sm font-medium text-gray-500 rounded-md">
                                 <img src="{{ asset('images/icons/avatars/blank.svg') }}" class="size-12" />
-    
+
                                 <div class="ml-1">
                                     <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20">
@@ -51,17 +53,17 @@
                                 </div>
                             </button>
                         </x-slot>
-    
+
                         <x-slot name="content">
                             <!-- Profile -->
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
-    
+
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-    
+
                                 <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault(); this.closest('form').submit();">
                                     {{ __('Log Out') }}
@@ -73,7 +75,7 @@
             @else
                 <div class="flex items-center space-x-4">
                     <!-- Search Bar -->
-                    <div class="relative hidden md:block">
+                    <div class="relative hidden lg:block">
                         <input type="text" placeholder="Cari Kursus..." class="w-64 px-4 py-2 input input-rounded">
                         <button class="absolute right-3 top-2.5">
                             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,14 +86,14 @@
                     </div>
 
                     <!-- Auth Links -->
-                    <a href="{{ route('register') }}" class="text-gray-900 hover:text-gray-700 font-medium">
+                    <a href="{{ route('register') }}" class="text-gray-900 hover:text-gray-700 font-medium max-lg:text-xs">
                         Daftar
                     </a>
-                    <a href="{{ route('login') }}" class="bg-blue-400 text-white px-4 py-2 rounded-lg  font-medium">
+                    <a href="{{ route('login') }}" class="bg-blue-400 text-white px-4 py-2 rounded-lg  font-medium max-lg:text-xs">
                         Login
                     </a>
                     <!-- Hamburger Button -->
-                    <div class="flex md:hidden">
+                    <div class="flex lg:hidden">
                         <button type="button"
                             class="text-gray-500 hover:text-gray-700 focus:outline-none  focus:ring-0"
                             x-on:click="isMenuOpen = !isMenuOpen" aria-label="Toggle navigation">
@@ -111,7 +113,7 @@
     </div>
 
     <!-- Mobile Menu -->
-    <div class="md:hidden" x-show="isMenuOpen" x-cloak x-transition:enter="transition ease-out duration-300 transform"
+    <div class="lg:hidden" x-show="isMenuOpen" x-cloak x-transition:enter="transition ease-out duration-300 transform"
         x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
         x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95">

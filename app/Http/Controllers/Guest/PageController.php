@@ -7,15 +7,14 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class HomeController extends Controller
+class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function home()
     {
         // SORT COURSES BY POPULARITY
-        
         $courses = DB::table('courses')
             ->select('courses.*', DB::raw('COUNT(course_users.id) as users_count'))
             ->leftJoin('course_users', 'courses.id', '=', 'course_users.course_id')
@@ -27,6 +26,11 @@ class HomeController extends Controller
         return view('pages.guest.home.index', [
             'courses' => $courses
         ]);
+    }
+
+    public function about()
+    {
+        return view('pages.guest.about.index');
     }
 
     /**

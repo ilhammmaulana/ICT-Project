@@ -2,13 +2,15 @@
 
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Guest\CourseController as GuestCourseController;
-use App\Http\Controllers\Guest\HomeController;
+use App\Http\Controllers\Guest\PageController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('/')->group(function () {
 
-    Route::get('/', [HomeController::class, 'index'])->name('home.index');
+    Route::get('/', [PageController::class, 'home'])->name('home.index');
+    Route::get('/about', [PageController::class, 'about'])->name('about.index');
+
     Route::prefix('articles')->group(function () {
         Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
         Route::get('/{id}', [ArticleController::class, 'show'])->name('articles.show');
