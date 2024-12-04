@@ -3,7 +3,7 @@
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
                 <h1 class="text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl">
-                    Kontak Kamiv
+                    Kontak Kami
                 </h1>
                 {{-- <p class="mt-4 text-2xl text-gray-600">
                     dengan Kursus Design dan Coding dari Kelas Gratis
