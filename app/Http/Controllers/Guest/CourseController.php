@@ -29,7 +29,7 @@ class CourseController extends Controller
             $courses = $courses->where('course_category_id', $course_category);
         }
 
-        $courses = $courses->with('courseCategory')->get();
+        $courses = $courses->with('courseCategory')->latest()->paginate(12);
         $course_categories = CourseCategory::all();
 
         return view('pages.guest.courses.index', [
