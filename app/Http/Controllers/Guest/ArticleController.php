@@ -12,8 +12,14 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         $article_category = $request->input('categoryId', '');
+        $search = $request->input('search', '');
+
         $article_categories = ArticleCategory::orderBy('name', 'asc')->get();
         $articles = Article::query();
+
+        if ($search) {
+            $articles = $articles->where('title', 'like', '%' . $search . '%');
+        }
 
         if ($article_category) {
             $articles = $articles->where('article_category_id', $article_category);
