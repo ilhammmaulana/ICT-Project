@@ -69,10 +69,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchForm = document.getElementById('course_search_form');
-
-        console.log(searchForm);
         const categorySearchInput = document.getElementById('category_search_input');
-        console.log(categorySearchInput);
+
         if (categorySearchInput) {
             categorySearchInput.addEventListener('change', function() {
                 if (searchForm) {
