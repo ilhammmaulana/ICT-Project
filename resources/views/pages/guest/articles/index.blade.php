@@ -3,7 +3,7 @@
         <h1 class="text-3xl font-bold text-center mb-6">Artikel</h1>
         <hr>
         <!-- Dropdown Kategori -->
-        <div class="flex justify-start mb-4 mt-3 md:mx-40">
+        {{-- <div class="flex justify-start mb-4 mt-3 md:mx-40">
             <div class="relative">
                 <select class="select select-ghost w-72">
                     <option class="font-bold">
@@ -15,20 +15,50 @@
                     <option>UI/UX</option>
                 </select>
             </div>
+        </div> --}}
+
+        <div class="my-10 md:mx-20">
+            <form action="{{ route('articles.index') }}" method="GET" class="flex items-center gap-3"
+                id="article_search_form">
+
+                <label for="categoryId" class="hidden">
+                </label>
+                <select class="select select-primary w-full max-w-xs select-md text-sm" id="category_search_input"
+                    name="categoryId">
+                    <option selected value="">Kategori</option>
+                    @foreach ($article_categories as $article_category)
+                        <option value="{{ $article_category->id }}" @if (request('categoryId') == $article_category->id) selected @endif>
+                            {{ $article_category->name }}</option>
+                    @endforeach
+                </select>
+
+                <label class="input input-bordered input-info flex items-center gap-2 w-full max-w-sm input-md"
+                    for="search">
+                    <input type="text" class="grow input  focus:border-none active:border-none text-sm"
+                        placeholder="Search" name="search" value="{{ request('search') }}" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                        class="h-4 w-4 opacity-70">
+                        <path fill-rule="evenodd"
+                            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </label>
+            </form>
         </div>
 
         <!-- Grid Artikel -->
         <div class="bg-white py-8 px-8 rounded-md md:mx-20">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 @foreach ($articles as $article)
-                    <a class="card mx-auto bg-base-100 w-80" href="{{ route('articles.show', $article->slug) }}">
-                        <figure class="w-full h-64 overflow-hidden rounded-lg">
+                    <a class="card mx-auto bg-base-100 block w-full"
+                        href="{{ route('articles.show', $article->slug) }}">
+                        <figure class="rounded-lg aspect-video object-cover">
                             <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->title }}"
-                                class="w-full h-full object-cover" />
+                                class="w-full h-80" />
                         </figure>
                         <div class="card-body">
                             <h2 class="card-title">
-                                {{ $article->title }}
+                                <span class="truncate">{{ $article->title }}</span>
                                 <div class="badge">NEW</div>
                             </h2>
                             <p>{{ Str::limit($article->body, 100, '...') }}</p>
@@ -44,7 +74,7 @@
                 @endforeach
             </div>
 
-            <div class="flex justify-center mt-6">
+            <div class="flex justify-center mt-20">
                 <nav aria-label="Pagination">
                     <ul class="inline-flex items-center space-x-2">
                         <!-- Previous Page Link -->
@@ -105,3 +135,17 @@
 
     </section>
 </x-landing-layout>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.getElementById('article_search_form');
+        const categorySearchInput = document.getElementById('category_search_input');
+
+        if (categorySearchInput) {
+            categorySearchInput.addEventListener('change', function() {
+                if (searchForm) {
+                    searchForm.submit();
+                }
+            })
+        }
+    })
+</script>

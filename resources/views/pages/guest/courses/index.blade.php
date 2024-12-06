@@ -64,15 +64,69 @@
         @else
             <p class="text-center text-muted-foreground my-44 font-medium">No courses found</p>
         @endif
+
+
+        <div class="flex justify-center mt-20">
+            <nav aria-label="Pagination">
+                <ul class="inline-flex items-center space-x-2">
+                    <!-- Previous Page Link -->
+                    @if ($courses->onFirstPage())
+                        <li>
+                            <span class="px-3 py-1 text-gray-500 bg-gray-200 rounded cursor-not-allowed">
+                                ← Previous
+                            </span>
+                        </li>
+                    @else
+                        <li>
+                            <a href="{{ $courses->previousPageUrl() }}"
+                                class="px-3 py-1 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">
+                                ← Previous
+                            </a>
+                        </li>
+                    @endif
+
+                    <!-- Pagination Links -->
+                    @foreach ($courses->getUrlRange(1, $courses->lastPage()) as $page => $url)
+                        <li>
+                            @if ($page == $courses->currentPage())
+                                <span class="px-3 py-1 text-white bg-blue-500 rounded cursor-default">
+                                    {{ $page }}
+                                </span>
+                            @else
+                                <a href="{{ $url }}"
+                                    class="px-3 py-1 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">
+                                    {{ $page }}
+                                </a>
+                            @endif
+                        </li>
+                    @endforeach
+
+                    <!-- Next Page Link -->
+                    @if ($courses->hasMorePages())
+                        <li>
+                            <a href="{{ $courses->nextPageUrl() }}"
+                                class="px-3 py-1 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">
+                                Next →
+                            </a>
+                        </li>
+                    @else
+                        <li>
+                            <span class="px-3 py-1 text-gray-500 bg-gray-200 rounded cursor-not-allowed">
+                                Next →
+                            </span>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
+
     </section>
 </x-landing-layout>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchForm = document.getElementById('course_search_form');
-
-        console.log(searchForm);
         const categorySearchInput = document.getElementById('category_search_input');
-        console.log(categorySearchInput);
+
         if (categorySearchInput) {
             categorySearchInput.addEventListener('change', function() {
                 if (searchForm) {
