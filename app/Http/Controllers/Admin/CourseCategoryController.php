@@ -16,17 +16,14 @@ class CourseCategoryController extends Controller
     {
         $search = request()->query('search', '');
 
-        $course_categories = CourseCategory::where('name', 'like', '%' . $search . '%')->get();
+        $course_categories = CourseCategory::where('name', 'like', '%' . $search . '%')->latest()->get();
         return view('pages.admin.course-categories.index', compact('course_categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -43,7 +40,7 @@ class CourseCategoryController extends Controller
             ]);
             return redirect()->route('admin.course-categories.index');
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
         }
     }
 

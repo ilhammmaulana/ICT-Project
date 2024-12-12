@@ -20,7 +20,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::latest()->paginate(10);
+        $search = request()->query('search');
+        $articles = Article::where('title', 'like', '%' . $search . '%')->latest()->paginate(10);
         return view('pages.admin.articles.index', [
             'articles' => $articles
         ]);
@@ -173,7 +174,7 @@ class ArticleController extends Controller
                 'meta_keyword' => $validatedData['meta_keyword'] ?? null,
                 'meta_description' => $validatedData['meta_description'] ?? null,
                 'image' => $imagePath ?? null,
-                ]);
+            ]);
 
             return redirect()->route('admin.articles.index')->with('success', 'Success update article!');
         } catch (\Throwable $th) {

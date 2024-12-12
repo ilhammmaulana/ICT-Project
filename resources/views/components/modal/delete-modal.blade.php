@@ -14,7 +14,8 @@
             @method('delete')
             @csrf
             <div class="flex justify-center">
-                <div class="sa">
+
+                <div class="bg-transparent sa ">
                     <div class="sa-warning">
                         <div class="sa-warning-body"></div>
                         <div class="sa-warning-dot"></div>
