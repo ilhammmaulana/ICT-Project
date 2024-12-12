@@ -22,9 +22,16 @@ class PageController extends Controller
             ->orderBy('users_count', 'desc')
             ->take(3)
             ->get();
+        $articles = DB::table('articles')
 
+            ->orderBy('created_at', 'desc')
+
+            ->take(9)
+
+            ->get();
         return view('pages.guest.home.index', [
-            'courses' => $courses
+            'courses' => $courses,
+            'articles' => $articles
         ]);
     }
 

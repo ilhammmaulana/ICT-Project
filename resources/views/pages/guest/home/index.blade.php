@@ -309,8 +309,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 mb-8">
                 <div>
                     <h2 class="text-3xl font-bold text-gray-900">Artikel</h2>
-                    <p class="text-gray-600 mt-2">Pilih paket langganan sebagai investasi belajar yang sesuai
-                        dengan
+                    <p class="text-gray-600 mt-2">Pilih paket langganan sebagai investasi belajar yang sesuai dengan
                         kebutuhan Anda.</p>
                 </div>
                 <div class="mt-4 md:mt-0 text-end content-center">
@@ -321,113 +320,19 @@
             </div>
             <!-- Course Grid -->
             <div class="bg-white rounded-lg">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-
-                    <div class="bg-white rounded-lg overflow-hidden border-gray-100">
-                        <div class="h-lg p-4">
-                            <img src="https://i0.wp.com/funstudy.id/wp-content/uploads/2024/07/representations-user-experience-interface-design-scaled.webp?fit=2560%2C1440&ssl=1"
-                                alt="UI/UX Design" class="w-full h-lg object-cover rounded" />
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  pb-8">
+                    @foreach ($articles as $article)
+                        <div class="bg-white rounded-lg overflow-hidden border-gray-100">
+                            <div class="h-lg p-4">
+                                <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->title }}"
+                                    class="w-full h-lg object-cover rounded" />
+                            </div>
+                            <div class="px-6">
+                                <p>{{ Carbon\Carbon::parse($article->created_at)->diffForHumans() }}</p>
+                                <h3 class="text-xl font-bold mb-3">{{ $article->title }}</h3>
+                            </div>
                         </div>
-                        <div class="px-6">
-                            <p>5 jam yang lalu</p>
-                            <h3 class="text-xl font-bold mb-3">UI/UX Design</h3>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg overflow-hidden border-gray-100">
-                        <div class="h-lg p-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShoa3fTQVLjpRKBF8M7MlF7i6EdtHq2xupDQ&s"
-                                alt="Web Design" class="w-full h-lg object-cover rounded" />
-                        </div>
-                        <div class="px-6">
-                            <p>5 jam yang lalu</p>
-                            <h3 class="text-xl font-bold mb-3">Perbedaan UI/UX dan Pentingnya dalam Desain Digital
-                            </h3>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg overflow-hidden border-gray-100">
-                        <div class="h-lg p-4">
-                            <img src="https://newxel.com/wp-content/uploads/2022/08/mobile-app-developer-skills.jpeg"
-                                alt="Mobile App Development" class="w-full h-lg object-cover rounded" />
-                        </div>
-                        <div class="px-6">
-                            <p>5 jam yang lalu</p>
-                            <h3 class="text-xl font-bold mb-3">Perbedaan UI/UX dan Pentingnya dalam Desain Digital
-                            </h3>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg overflow-hidden border-gray-100">
-                        <div class="h-lg p-4">
-                            <img src="https://i0.wp.com/funstudy.id/wp-content/uploads/2024/07/representations-user-experience-interface-design-scaled.webp?fit=2560%2C1440&ssl=1"
-                                alt="UI/UX Design" class="w-full h-lg object-cover rounded" />
-                        </div>
-                        <div class="px-6">
-                            <p>5 jam yang lalu</p>
-                            <h3 class="text-xl font-bold mb-3">UI/UX Design</h3>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg overflow-hidden border-gray-100">
-                        <div class="h-lg p-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShoa3fTQVLjpRKBF8M7MlF7i6EdtHq2xupDQ&s"
-                                alt="Web Design" class="w-full h-lg object-cover rounded" />
-                        </div>
-                        <div class="px-6">
-                            <p>5 jam yang lalu</p>
-                            <h3 class="text-xl font-bold mb-3">Perbedaan UI/UX dan Pentingnya dalam Desain Digital
-                            </h3>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg overflow-hidden border-gray-100">
-                        <div class="h-lg p-4">
-                            <img src="https://newxel.com/wp-content/uploads/2022/08/mobile-app-developer-skills.jpeg"
-                                alt="Mobile App Development" class="w-full h-lg object-cover rounded" />
-                        </div>
-                        <div class="px-6">
-                            <p>5 jam yang lalu</p>
-                            <h3 class="text-xl font-bold mb-3">Perbedaan UI/UX dan Pentingnya dalam Desain Digital
-                            </h3>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg overflow-hidden border-gray-100">
-                        <div class="h-lg p-4">
-                            <img src="https://i0.wp.com/funstudy.id/wp-content/uploads/2024/07/representations-user-experience-interface-design-scaled.webp?fit=2560%2C1440&ssl=1"
-                                alt="UI/UX Design" class="w-full h-lg object-cover rounded" />
-                        </div>
-                        <div class="px-6">
-                            <p>5 jam yang lalu</p>
-                            <h3 class="text-xl font-bold mb-3">UI/UX Design</h3>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg overflow-hidden border-gray-100">
-                        <div class="h-lg p-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShoa3fTQVLjpRKBF8M7MlF7i6EdtHq2xupDQ&s"
-                                alt="Web Design" class="w-full h-lg object-cover rounded" />
-                        </div>
-                        <div class="px-6">
-                            <p>5 jam yang lalu</p>
-                            <h3 class="text-xl font-bold mb-3">Perbedaan UI/UX dan Pentingnya dalam Desain Digital
-                            </h3>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg overflow-hidden border-gray-100">
-                        <div class="h-lg p-4">
-                            <img src="https://newxel.com/wp-content/uploads/2022/08/mobile-app-developer-skills.jpeg"
-                                alt="Mobile App Development" class="w-full h-lg object-cover rounded" />
-                        </div>
-                        <div class="px-6">
-                            <p>5 jam yang lalu</p>
-                            <h3 class="text-xl font-bold mb-3">Perbedaan UI/UX dan Pentingnya dalam Desain Digital
-                            </h3>
-                        </div>
-                    </div>
-
+                    @endforeach
                 </div>
             </div>
         </div>

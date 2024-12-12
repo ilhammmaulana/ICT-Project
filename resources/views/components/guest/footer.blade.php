@@ -4,9 +4,9 @@
         <!-- Logo and Contact -->
         <div>
             <div class="mb-4">
-                <x-application-logo aria-hidden="true" class="w-28 h-auto" />
+                <x-application-logo aria-hidden="true" class="w-40 absolute h-auto" style="margin-top: -3rem" />
             </div>
-            <ul class="text-gray-600 space-y-2">
+            <ul class="text-gray-600 space-y-2 mt-16">
                 <li class="flex items-center">
                     <span class="material-icons">Email: </span>
                     <a href="mailto:hello@KelasGratis.com" class="ml-2">contact@kelasgratis.id</a>
@@ -45,13 +45,8 @@
         <!-- Social Media -->
         <div>
             <h3 class="font-semibold text-gray-800 mb-4">Sosial Media</h3>
-            <div class="flex space-x-4">
-                <a href="#" class="text-gray-600 hover:text-gray-800">
-                    <svg class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path
-                            d="M24 4.56v15.34c0 2.31-1.87 4.18-4.18 4.18H4.18A4.18 4.18 0 010 19.9V4.56C0 2.24 1.87.37 4.18.37h15.64C22.13.37 24 2.24 24 4.56zM9.75 19.17v-7.2H7.42v-3.05h2.33v-1.9c0-2.32 1.42-3.59 3.51-3.59.98 0 1.8.07 2.04.1v2.37h-1.4c-1.1 0-1.31.52-1.31 1.28v1.76h2.59l-.34 3.05h-2.25v7.2H9.75z" />
-                    </svg>
-                </a>
+            <div class="flex space-x-3">
+
                 <a href="#" class="text-gray-600 hover:text-gray-800">
                     <svg class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path

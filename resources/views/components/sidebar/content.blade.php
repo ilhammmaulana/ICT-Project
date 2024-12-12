@@ -1,5 +1,5 @@
 <x-perfect-scrollbar as="nav" aria-label="main" class="flex flex-col flex-1 gap-4 px-3">
-    @role(['admin', 'editor'])
+    @role(['admin'])
         <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500 dark:text-white">
             Analytics
         </div>
@@ -39,23 +39,21 @@
         </x-sidebar.link> --}}
     @endrole
 
-    @role(['user'])
-        <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500 dark:text-white">
-            Application
-        </div>
+    <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500 dark:text-white">
+        Application
+    </div>
 
-        <x-sidebar.link title="Courses" href="{{ route('user.courses.index') }}" :isActive="request()->routeIs('user.courses.index')">
-            <x-slot name="icon">
-                <x-icons.dashboard class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-            </x-slot>
-        </x-sidebar.link>
-        <x-sidebar.link title="Articles" href="{{ route('user.articles.index') }}" :isActive="request()->routeIs('user.articles.index')">
-            <x-slot name="icon">
-                <x-icons.news class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+    <x-sidebar.link title="Courses" href="{{ route('user.courses.index') }}" :isActive="request()->routeIs('user.courses.index')">
+        <x-slot name="icon">
+            <x-icons.dashboard class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+        </x-slot>
+    </x-sidebar.link>
+    <x-sidebar.link title="Articles" href="{{ route('articles.index') }}" :isActive="request()->routeIs('user.articles.index')">
+        <x-slot name="icon">
+            <x-icons.news class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
 
-            </x-slot>
-        </x-sidebar.link>
-    @endrole
+        </x-slot>
+    </x-sidebar.link>
 
 
 </x-perfect-scrollbar>
