@@ -107,11 +107,11 @@
                         banyak keuntungan, di antaranya:
                     </p>
                 </div>
-                <div class="mt-4 md:mt-0 text-end content-center">
+                {{-- <div class="mt-4 md:mt-0 text-end content-center">
                     <button
                         class="bg-white hover:bg-gray-100 text-gray-700 font-light py-2 px-4 border border-gray-200 hover:border-transparent rounded">Lihat
                         Semua</button>
-                </div>
+                </div> --}}
             </div>
             <!-- Bagian Keuntungan -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -229,14 +229,15 @@
                     </div>
                 </div>
             </div> --}}
-            <div class="grid grid-cols-3 gap-4 lg:grid-cols-3 xl:grid-cols-3 mt-6">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mt-6">
                 @foreach ($courses as $course)
                     <div class="bg-white rounded-lg overflow-hidden p-3">
                         <img src="{{ asset($course->image) }}" alt="{{ $course->name }}"
                             class="rounded-md aspect-square object-cover">
                         <div class="p-2">
                             <h2 class="text-base font-semibold">{{ $course->title }}</h2>
-                            <p class=" text-muted-foreground line-clamp-4 text-gray-600 text-xs mt-2">
+                            <p
+                                class=" text-muted-foreground line-clamp-4 text-gray-600 text-xs mt-2 min-h-[calc(4*1.25rem)]">
                                 {{ $course->description }}
                             </p>
                             <a href="{{ route('courses.show', $course->slug) }}" title="{{ $course->name }}">
@@ -257,11 +258,11 @@
                     <p class="text-gray-600 mt-2">Apa kata mereka yang telah menyelesaikan kursus di Kelas Gratis?
                     </p>
                 </div>
-                <div class="mt-4 md:mt-0 text-end content-center">
+                {{-- <div class="mt-4 md:mt-0 text-end content-center">
                     <button
                         class="bg-white hover:bg-gray-100 text-gray-700 font-light py-2 px-4 border border-gray-200 hover:border-transparent rounded">Lihat
                         Semua</button>
-                </div>
+                </div> --}}
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Testimonial Card 1 -->
@@ -313,9 +314,11 @@
                         kebutuhan Anda.</p>
                 </div>
                 <div class="mt-4 md:mt-0 text-end content-center">
-                    <button
-                        class="bg-white hover:bg-gray-100 text-gray-700 font-light py-2 px-4 border border-gray-200 hover:border-transparent rounded">Lihat
-                        Semua</button>
+                    <a href="{{ route('articles.index') }}">
+                        <button
+                            class="bg-white hover:bg-gray-100 text-gray-700 font-light py-2 px-4 border border-gray-200 hover:border-transparent rounded">Lihat
+                            Semua</button>
+                    </a>
                 </div>
             </div>
             <!-- Course Grid -->
@@ -323,15 +326,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  pb-8">
                     @foreach ($articles as $article)
                         <a href="{{ route('articles.show', $article->slug) }}"
-                            class="bg-white rounded-lg overflow-hidden border-gray-100">
-                            <div class="h-lg p-4">
+                            class="bg-white rounded-lg border-gray-100 block w-full">
+                            <div class="p-4 overflow-hidden">
                                 <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->title }}"
-                                    class="w-full h-lg object-cover rounded" />
+                                    class="w-full h-40 object-cover rounded" />
                             </div>
-                            <div class="px-6">
+
+                            <div class="px-6 min-w-0">
                                 <p>{{ Carbon\Carbon::parse($article->created_at)->diffForHumans() }}</p>
-                                <h3 class="text-xl font-bold mb-3">{{ $article->title }}</h3>
+                                <h3 class="text-xl font-bold mb-3 line-clamp-1 text-truncate">{{ $article->title }}</h3>
                             </div>
+
                         </a>
                     @endforeach
                 </div>

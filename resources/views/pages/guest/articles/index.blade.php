@@ -17,7 +17,7 @@
             </div>
         </div> --}}
 
-        <div class="my-10 md:mx-20">
+        <div class="my-10 mx:mx-5 lg:mx-10 xl:mx-20">
             <form action="{{ route('articles.index') }}" method="GET" class="flex items-center gap-3"
                 id="article_search_form">
 
@@ -47,7 +47,7 @@
         </div>
 
         <!-- Grid Artikel -->
-        <div class="bg-white py-8 px-8 rounded-md md:mx-20">
+        <div class="bg-white py-4 px-4 rounded-md mx:mx-5 lg:mx-10 xl:mx-20">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 @foreach ($articles as $article)
                     <a class="card mx-auto bg-base-100 block w-full"
@@ -57,16 +57,16 @@
                                 class="w-full h-80" />
                         </figure>
                         <div class="card-body">
-                            <h2 class="card-title">
+                            <h2 class="card-title max-md:text-sm">
                                 <span class="truncate">{{ $article->title }}</span>
                                 <div class="badge">NEW</div>
                             </h2>
                             <p>{{ Str::limit($article->body, 100, '...') }}</p>
                             <div class="card-actions justify-end">
                                 @if ($article->categoryArticle)
-                                    <div class="badge badge-primary">{{ $article->categoryArticle->name }}</div>
+                                    <div class="badge badge-primary max-md:text-xs">{{ $article->categoryArticle->name }}</div>
                                 @else
-                                    <div class="badge badge-primary">Uncategorized</div>
+                                    <div class="badge badge-primary max-md:text-xs">Uncategorized</div>
                                 @endif
                             </div>
                         </div>
