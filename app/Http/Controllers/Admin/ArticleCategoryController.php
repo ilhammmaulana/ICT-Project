@@ -16,7 +16,9 @@ class ArticleCategoryController extends Controller
      */
     public function index()
     {
-        $articleCategories = ArticleCategory::latest()->paginate(10);
+        $search = request()->query('search');
+
+        $articleCategories = ArticleCategory::where('name', 'like', '%' . $search . '%')->latest()->paginate(10);
         return view('pages.admin.articles-categories.index', compact('articleCategories'));
     }
 
