@@ -68,7 +68,6 @@
     @if (session('success'))
         <script>
             const currentTheme = document.documentElement.getAttribute('data-theme'); // Get the current theme
-            console.log(currentTheme);
             const Toast = Swal.mixin({
                 toast: true,
                 background: currentTheme === 'dark' ? 'black' : 'white', // Set background based on theme
@@ -92,7 +91,6 @@
     @if (session('error'))
         <script>
             const currentTheme = document.documentElement.getAttribute('data-theme'); // Get the current theme
-            console.log(currentTheme);
             const Toast = Swal.mixin({
                 toast: true,
                 background: currentTheme === 'dark' ? 'black' : 'white', // Set background based on theme
