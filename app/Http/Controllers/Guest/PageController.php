@@ -23,16 +23,18 @@ class PageController extends Controller
             ->take(3)
             ->get();
         $articles = DB::table('articles')
-
-            ->orderBy('created_at', 'desc')
-
+            ->join('users', 'articles.created_by', '=', 'users.id')
+            ->select('articles.*', 'users.name as author_name') // Add 'author_name' here
+            ->orderBy('articles.created_at', 'desc')
             ->take(9)
-
             ->get();
+
+
         return view('pages.guest.home.index', [
             'courses' => $courses,
             'articles' => $articles
         ]);
+
     }
 
     public function about()
