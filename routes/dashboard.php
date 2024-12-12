@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('dashboard')->group(function () {
-    // Route::get('/', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');
 
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
