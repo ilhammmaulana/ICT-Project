@@ -90,16 +90,18 @@
             @if ($courses->count() > 0)
                 <div class="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                     @foreach ($courses as $course)
-                        <div class="bg-white rounded-lg overflow-hidden p-3">
+                        <div class="bg-white rounded-lg overflow-hidden p-3 flex flex-col">
                             <img src="{{ asset($course->image) }}" alt="{{ $course->name }}"
-                                class="rounded-md aspect-square object-cover">
-                            <div class="p-2">
+                                class="rounded-md aspect-square object-cover w-full">
+                            <div class="p-2 flex-grow">
                                 <h2 class="text-base font-semibold">{{ $course->title }}</h2>
-                                <p class=" text-muted-foreground line-clamp-4 text-gray-600 text-xs mt-2">
+                                <p class="text-muted-foreground line-clamp-4 text-gray-600 text-xs mt-2">
                                     {{ $course->description }}
                                 </p>
+                            </div>
 
-
+                            <!-- Footer section -->
+                            <div class="flex flex-col mt-auto">
                                 <div class="flex items-center gap-3 justify-end my-2">
                                     <div class="flex items-center gap-1 text-xs font-medium text-muted-foreground mt-3">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -112,13 +114,11 @@
                                     </div>
 
                                     <div class="flex items-center gap-1 text-xs font-medium text-muted-foreground mt-3">
-
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-600">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                                         </svg>
-
 
                                         @php
                                             $totalModuleContents = 0;
@@ -127,7 +127,6 @@
                                             }
                                         @endphp
                                         {{ $totalModuleContents }} Module Contents
-
                                     </div>
                                 </div>
 
@@ -141,6 +140,7 @@
             @else
                 <p class="text-center text-muted-foreground my-44 font-medium">No courses found</p>
             @endif
+
         </section>
 </x-app-layout>
 
