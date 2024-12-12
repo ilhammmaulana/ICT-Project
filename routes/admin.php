@@ -32,7 +32,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::get('/', [CourseController::class, 'index'])->name('admin.courses.index');
         Route::get('/create', [CourseController::class, 'create'])->name('admin.courses.create');
         Route::post('/', [CourseController::class, 'store'])->name('admin.courses.store');
-        Route::get('/edit/{course}', [CourseController::class, 'edit'])->name('admin.courses.edit');
+        // Route::get('/edit/{course}', [CourseController::class, 'edit'])->name('admin.courses.edit');
         Route::get('/{course}', [CourseController::class, 'show'])->name('admin.courses.show');
         Route::put('/{course}', [CourseController::class, 'update'])->name('admin.courses.update');
         Route::delete('/{id}', [CourseController::class, 'destroy'])->name('admin.courses.destroy');

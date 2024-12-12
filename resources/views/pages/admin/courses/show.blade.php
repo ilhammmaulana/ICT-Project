@@ -30,7 +30,7 @@
                 <h2 class="text-xl font-semibold">Course Modules</h2>
                 <div class="flex justify-between mt-12">
 
-                    <form action="{{ route('admin.courses.edit', $course) }}" method="GET" id="search_form">
+                    <form action="{{ route('admin.courses.show', $course) }}" method="GET" id="search_form">
                         <label class="input input-bordered flex items-center gap-2" for="searchModule">
                             <input type="text" class="grow input  focus:border-none active:border-none"
                                 placeholder="Search" name="searchModule" id="module-search-input"
@@ -53,7 +53,7 @@
                                 <div class="d-flex gap-3 align-items-center">
                                     <x-course-modules.edit-course-module-modal :courseId="$course->id" :module="$module"
                                         :contents="$module->moduleContents" />
-                                    <x-modal.delete-modal :id="$module->id" :action="route('admin.course-modules.destroy', $course)" />
+                                    <x-modal.delete-modal :id="$module->id" :action="route('admin.course-modules.destroy', $module)" />
                                 </div>
 
 

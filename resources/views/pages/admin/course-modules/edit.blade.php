@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="flex justify-end gap-3 mt-5">
-                            <a href="{{ route('admin.courses.edit', $module->course) }}"><button class="btn"
+                            <a href="{{ route('admin.courses.show', $module->course) }}"><button class="btn"
                                     type="button">Cancel</button></a>
                             <button class="btn btn-active btn-primary">Submit</button>
                         </div>

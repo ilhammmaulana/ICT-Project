@@ -28,7 +28,7 @@
             <div class="flex justify-end gap-3 mt-12">
                 <button class="btn" type="button"
                     onclick="document.getElementById('{{ str_replace('-', '_', $id) . '_destroy' }}').close()">Cancel</button>
-                <button class="btn btn-active btn-error text-white dark:text-black">Delete</button>
+                <button class="btn btn-active btn-error text-white dark:text-black" type="submit">Delete</button>
             </div>
         </form>
     </div>
