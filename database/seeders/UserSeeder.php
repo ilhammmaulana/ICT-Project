@@ -32,5 +32,11 @@ class UserSeeder extends Seeder
             'email' => 'admin@unsia.ac.id',
             'password' => Hash::make('password'),
         ])->assignRole('admin');
+        User::create([
+            'id' => Str::uuid(),
+            'name' => 'User',
+            'email' => 'user@unsia.ac.id',
+            'password' => Hash::make('password'),
+        ])->assignRole('user');
     }
 }

@@ -20,7 +20,7 @@
                         </x-slot>
 
                         <x-form.input withicon id="email" class="block w-full" type="email" name="email"
-                            :value="__('admin@unsia.ac.id')" placeholder="{{ __('Email') }}" required autofocus />
+                            placeholder="{{ __('Email') }}" required autofocus />
                     </x-form.input-with-icon-wrapper>
                 </div>
 
@@ -33,9 +33,8 @@
                             <x-heroicon-o-lock-closed aria-hidden="true" class="w-5 h-5" />
                         </x-slot>
 
-                        <x-form.input withicon id="password" class="block w-full" value="password" type="password"
-                            name="password" required autocomplete="current-password"
-                            placeholder="{{ __('Password') }}" />
+                        <x-form.input withicon id="password" class="block w-full" type="password" name="password"
+                            required autocomplete="current-password" placeholder="{{ __('Password') }}" />
                     </x-form.input-with-icon-wrapper>
                 </div>
 

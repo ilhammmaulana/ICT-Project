@@ -322,7 +322,8 @@
             <div class="bg-white rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  pb-8">
                     @foreach ($articles as $article)
-                        <div class="bg-white rounded-lg overflow-hidden border-gray-100">
+                        <a href="{{ route('articles.show', $article->slug) }}"
+                            class="bg-white rounded-lg overflow-hidden border-gray-100">
                             <div class="h-lg p-4">
                                 <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->title }}"
                                     class="w-full h-lg object-cover rounded" />
@@ -331,7 +332,7 @@
                                 <p>{{ Carbon\Carbon::parse($article->created_at)->diffForHumans() }}</p>
                                 <h3 class="text-xl font-bold mb-3">{{ $article->title }}</h3>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             </div>

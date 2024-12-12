@@ -40,7 +40,7 @@
     @endrole
 
     <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500 dark:text-white">
-        Application
+        Learning
     </div>
 
     <x-sidebar.link title="Courses" href="{{ route('user.courses.index') }}" :isActive="request()->routeIs('user.courses.index')">
