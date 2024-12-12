@@ -91,7 +91,7 @@ class CourseController extends Controller
                 'created_by' => auth()->user()->id
             ]);
 
-            return redirect()->route('admin.courses.index');
+            return redirect()->route('admin.courses.index')->with('success', 'Success create course!');
         } catch (\Throwable $th) {
             Log::info($th);
         }
@@ -182,7 +182,6 @@ class CourseController extends Controller
             ]);
 
             return redirect()->route('admin.courses.show', ['course' => $course]);
-
         } catch (\Throwable $th) {
             Log::info($th);
             //throw $th;

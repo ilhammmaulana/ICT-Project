@@ -4,14 +4,13 @@
             <h2 class="text-xl font-semibold leading-tight">
                 {{ __('Course Categories') }}
             </h2>
-
         </div>
     </x-slot>
 
     <div class="flex justify-between">
         <form action="{{ route('admin.course-categories.index') }}" method="GET">
             <label class="input input-bordered input-info flex items-center gap-2" for="search">
-                <input type="text" class="grow input  focus:border-none active:border-none" placeholder="Search"
+                <input type="text" class="grow input focus:border-none active:border-none" placeholder="Search"
                     name="search" value="{{ request('search') }}" />
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                     class="h-4 w-4 opacity-70">
@@ -67,10 +66,7 @@
                         </td>
                         <td class="px-6 py-4">
                             <x-course-categories.edit-modal :courseCategory="$course_category" />
-
                             <x-modal.delete-modal :id="$course_category->id" :action="route('admin.course-categories.destroy', $course_category->id)" :style="'table'" />
-                            
-
                             {{-- <x-button href="{{ route('admin.course-categories.edit', $course_category) }}">
                             Edit
                         </x-button> --}}
