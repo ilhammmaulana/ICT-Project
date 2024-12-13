@@ -62,7 +62,6 @@
                                 <div class="badge">NEW</div>
                             </h2>
                             <p>{{ Str::limit($article->body, 100, '...') }}</p>
-                            <p>{{ $article->created_at ? $article->created_at : 'dofiduf' }}</p>
                             <div class="card-actions justify-end">
                                 @if ($article->categoryArticle)
                                     <div class="badge badge-primary max-md:text-xs">{{ $article->categoryArticle->name }}</div>
