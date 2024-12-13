@@ -231,22 +231,23 @@
             </div> --}}
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mt-6">
                 @foreach ($courses as $course)
-                    <div class="bg-white rounded-lg overflow-hidden p-3">
+                    <div class="bg-white rounded-lg overflow-hidden p-3 flex flex-col h-full">
                         <img src="{{ asset($course->image) }}" alt="{{ $course->name }}"
                             class="rounded-md aspect-square object-cover">
-                        <div class="p-2">
+                        <div class="p-2 flex-grow">
                             <h2 class="text-base font-semibold">{{ $course->title }}</h2>
-                            <p
-                                class=" text-muted-foreground line-clamp-4 text-gray-600 text-xs mt-2 min-h-[calc(4*1.25rem)]">
+                            <p class=" text-muted-foreground line-clamp-4 text-gray-600 text-xs mt-2">
                                 {{ $course->description }}
                             </p>
+                        </div>
+                        <div class="flex flex-col mt-auto">
                             <a href="{{ route('courses.show', $course->slug) }}" title="{{ $course->name }}">
                                 <button class="btn w-full btn-sm mt-2 text-xs">Mulai Sekarang</button>
                             </a>
                         </div>
                     </div>
                 @endforeach
-            </div>
+            </div>            
         </div>
     </section>
 
@@ -334,7 +335,8 @@
 
                             <div class="px-6 min-w-0">
                                 <p>{{ Carbon\Carbon::parse($article->created_at)->diffForHumans() }}</p>
-                                <h3 class="text-xl font-bold mb-3 line-clamp-1 text-truncate">{{ $article->title }}</h3>
+                                <h3 class="text-xl font-bold mb-3 line-clamp-1 text-truncate">{{ $article->title }}
+                                </h3>
                             </div>
 
                         </a>

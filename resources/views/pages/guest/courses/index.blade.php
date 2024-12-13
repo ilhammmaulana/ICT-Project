@@ -48,7 +48,7 @@
                 @foreach ($courses as $course)
                     <div class="bg-white rounded-lg overflow-hidden p-3">
                         <img src="{{ asset($course->image) }}" alt="{{ $course->name }}"
-                            class="rounded-md aspect-square object-cover">
+                            class="rounded-md aspect-square object-cover min-h-full">
                         <div class="p-2">
                             <h2 class="text-base font-semibold">{{ $course->title }}</h2>
                             <p class=" text-muted-foreground line-clamp-4 text-gray-600 text-xs mt-2">
