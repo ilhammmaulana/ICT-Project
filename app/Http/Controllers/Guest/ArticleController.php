@@ -29,6 +29,7 @@ class ArticleController extends Controller
 
         return view('pages.guest.articles.index', compact('articles', 'article_categories'));
     }
+
     public function show($slug)
     {
         $article = Article::with(['categoryArticle', 'user'])->where('slug', $slug)->first();
