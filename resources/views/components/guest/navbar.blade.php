@@ -44,7 +44,7 @@
                     Dashboard
                 </a>
                 @else
-                <a href="{{ route('courses.index') }}"
+                <a href="{{ route('user.courses.index') }}"
                     class="hidden lg:block text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                     Kursus
                 </a>
