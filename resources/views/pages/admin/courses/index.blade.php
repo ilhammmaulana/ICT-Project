@@ -12,7 +12,7 @@
         <form action="{{ route('admin.courses.index') }}" method="GET">
             <label class="input input-bordered input-info flex items-center gap-2" for="search">
                 <input type="text" class="grow input  focus:border-none active:border-none" placeholder="Search"
-                    name="search"  value="{{ request('search') }}"/>
+                    name="search" value="{{ request('search') }}" />
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                     class="h-4 w-4 opacity-70">
                     <path fill-rule="evenodd"
@@ -72,53 +72,52 @@
             </thead>
             <tbody>
                 @foreach ($courses as $course)
-                    <tr class="bg-white border-b dark:bg-gray-800">
-                        <td>
-                            {{ $loop->iteration }}
-                        </td>
-                        <th>
-                            {{ $course->name }}
-                        </th>
-                        <th>
-                            {{ $course->title }}
-                        </th>
-                        <th>
-                            {{ $course->description }}
-                        </th>
-                        <th>
-                            {{ $course->meta_title }}
-                        </th>
+                <tr class="bg-white border-b dark:bg-gray-800">
+                    <td>
+                        {{ $loop->iteration }}
+                    </td>
+                    <th>
+                        {{ $course->name }}
+                    </th>
+                    <th>
+                        {{ $course->title }}
+                    </th>
+                    <th>
+                        {{ $course->description }}
+                    </th>
+                    <th>
+                        {{ $course->meta_title }}
+                    </th>
 
-                        <th>
-                            {{ $course->meta_description }}
-                        </th>
+                    <th>
+                        {{ $course->meta_description }}
+                    </th>
 
-                        <th>
-                            @if ($course->image)
-                                <img src="{{ asset($course->image) }}" alt="{{ $course->name }}"
-                                    class="rounded max-w-40">
-                            @else
-                                No Cover Image
-                            @endif
-                        </th>
-                        <th>
-                            {{ $course->courseCategory->name }}
-                        </th>
-                        <td>
-                            {{ $course->created_at ?? '-' }}
+                    <th>
+                        @if ($course->image)
+                        <img src="{{ asset($course->image) }}" alt="{{ $course->name }}" class="rounded max-w-40">
+                        @else
+                        No Cover Image
+                        @endif
+                    </th>
+                    <th>
+                        {{ $course->courseCategory->name }}
+                    </th>
+                    <td>
+                        {{ $course->created_at ?? '-' }}
 
-                        </td>
-                        <td>
-                            {{ $course->updated_at ?? '-' }}
-                        </td>
-                        <td class="px-6 py-4 flex gap-3">
-                            <x-detail-button href="{{ route('admin.courses.show', $course) }}" />
+                    </td>
+                    <td>
+                        {{ $course->updated_at ?? '-' }}
+                    </td>
+                    <td class="px-6 py-4 flex gap-3">
+                        <x-detail-button href="{{ route('admin.courses.show', $course) }}" />
 
-                            {{-- <x-edit-button href="{{ route('admin.courses.edit', $course) }}" /> --}}
+                        {{-- <x-edit-button href="{{ route('admin.courses.edit', $course) }}" /> --}}
 
-                            <x-modal.delete-modal :id="$course->id" :action="route('admin.courses.destroy', $course->id)" />
-                        </td>
-                    </tr>
+                        <x-modal.delete-modal :id="$course->id" :action="route('admin.courses.destroy', $course->id)" />
+                    </td>
+                </tr>
                 @endforeach
 
             </tbody>

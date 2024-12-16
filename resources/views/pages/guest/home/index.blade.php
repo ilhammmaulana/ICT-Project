@@ -231,23 +231,23 @@
             </div> --}}
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mt-6">
                 @foreach ($courses as $course)
-                    <div class="bg-white rounded-lg overflow-hidden p-3 flex flex-col h-full">
-                        <img src="{{ asset($course->image) }}" alt="{{ $course->name }}"
-                            class="rounded-md aspect-square object-cover">
-                        <div class="p-2 flex-grow">
-                            <h2 class="text-base font-semibold">{{ $course->title }}</h2>
-                            <p class=" text-muted-foreground line-clamp-4 text-gray-600 text-xs mt-2">
-                                {{ $course->description }}
-                            </p>
-                        </div>
-                        <div class="flex flex-col mt-auto">
-                            <a href="{{ route('courses.show', $course->slug) }}" title="{{ $course->name }}">
-                                <button class="btn w-full btn-sm mt-2 text-xs">Mulai Sekarang</button>
-                            </a>
-                        </div>
+                <div class="bg-white rounded-lg overflow-hidden p-3 flex flex-col h-full">
+                    <img src="{{ asset($course->image) }}" alt="{{ $course->name }}"
+                        class="rounded-md aspect-square object-cover">
+                    <div class="p-2 flex-grow">
+                        <h2 class="text-base font-semibold">{{ $course->title }}</h2>
+                        <p class=" text-muted-foreground line-clamp-4 text-gray-600 text-xs mt-2">
+                            {{ $course->description }}
+                        </p>
                     </div>
+                    <div class="flex flex-col mt-auto">
+                        <a href="{{ route('courses.show', $course->slug) }}" title="{{ $course->name }}">
+                            <button class="btn w-full btn-sm mt-2 text-xs">Mulai Sekarang</button>
+                        </a>
+                    </div>
+                </div>
                 @endforeach
-            </div>            
+            </div>
         </div>
     </section>
 
@@ -324,22 +324,31 @@
             </div>
             <!-- Course Grid -->
             <div class="bg-white rounded-lg">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  pb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-5 py-5">
                     @foreach ($articles as $article)
-                        <a href="{{ route('articles.show', $article->slug) }}"
-                            class="bg-white rounded-lg border-gray-100 block w-full">
-                            <div class="p-4 overflow-hidden">
-                                <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->title }}"
-                                    class="w-full h-40 object-cover rounded" />
+                    <a class="card mx-auto bg-base-100  w-full flex flex-col"
+                        href="{{ route('articles.show', $article->slug) }}">
+                        <figure class="rounded-lg aspect-video object-cover">
+                            <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->title }}"
+                                class="w-full h-80 object-cover rounded-t-lg" />
+                        </figure>
+                        <div class="card-body p-4">
+                            <h2 class="card-title text-sm font-semibold leading-tight text-gray-800 mb-2">
+                                {{ $article->title }}
+                            </h2>
+                            <p class="text-gray-600 text-xs mb-4">
+                                {{ Str::limit(strip_tags($article->content), 100, '...') }}
+                            </p>
+                            <div class="card-actions justify-between flex items-center space-x-2">
+                                <div class="text-xs text-gray-500 flex flex-col space-y-1">
+                                    <span>Created by: {{ $article->author_name }}</span>
+                                    <span>
+                                        Published {{ \Carbon\Carbon::parse($article->created_at)->diffForHumans() }}
+                                    </span>
+                                </div>
                             </div>
-
-                            <div class="px-6 min-w-0">
-                                <p>{{ Carbon\Carbon::parse($article->created_at)->diffForHumans() }}</p>
-                                <h3 class="text-xl font-bold mb-3 line-clamp-1 text-truncate">{{ $article->title }}
-                                </h3>
-                            </div>
-
-                        </a>
+                        </div>
+                    </a>
                     @endforeach
                 </div>
             </div>

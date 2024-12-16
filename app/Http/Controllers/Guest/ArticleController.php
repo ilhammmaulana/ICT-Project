@@ -25,7 +25,7 @@ class ArticleController extends Controller
             $articles = $articles->where('article_category_id', $article_category);
         }
 
-        $articles = $articles->with(['categoryArticle'])->latest()->paginate(9);
+        $articles = $articles->with(['categoryArticle', 'user'])->latest()->paginate(9);
 
         return view('pages.guest.articles.index', compact('articles', 'article_categories'));
     }

@@ -148,7 +148,7 @@ class ArticleController extends Controller
             $slug = Str::slug($validatedData['title']);
             $existingArticle = Article::where('slug', $slug)->first();
             $article = Article::select('image')->where('id', $id)->first();
-            if ($existingArticle  && $slug !== $existingArticle->slug) {
+            if ($existingArticle && $slug !== $existingArticle->slug) {
                 // Return an error if the slug already exists
                 return back()->with('error', 'An article with this slug already exists. Please choose a different title.');
             }
